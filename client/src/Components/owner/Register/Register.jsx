@@ -36,7 +36,7 @@ function OwnerRegister() {
                             <form method="POST" className="register-form" onSubmit={signUpForm} id="register-form">
                                 <div className="form-group">
                                     <label for="name">
-                                        <i className="zmdi zmdi-account material-icons-name"></i>
+                                        {/* <i className="zmdi zmdi-account material-icons-name"></i> */}
                                     </label>
                                     <input
                                         type="text"
@@ -51,7 +51,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="email">
-                                        <i className="zmdi zmdi-email"></i>
+                                        {/* <i className="zmdi zmdi-email"></i> */}
                                     </label>
                                     <input
                                         type="email"
@@ -66,7 +66,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="pass">
-                                        <i class="fa-sharp fa-solid fa-address-book"></i>
+                                        {/* <i class="fa-sharp fa-solid fa-address-book"></i> */}
                                     </label>
                                     <input
                                         type="text"
@@ -81,7 +81,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="re-pass">
-                                        <i className="zmdi zmdi-lock-outline"></i>
+                                        {/* <i className="zmdi zmdi-lock-outline"></i> */}
                                     </label>
                                     <input
                                         type="password"

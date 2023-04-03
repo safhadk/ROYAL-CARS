@@ -52,7 +52,7 @@ function Login() {
                             <form method="POST" className="register-form" onSubmit={LoginFormPost} id="login-form">
                                 <div className="form-group">
                                     <label for="your_name">
-                                        <i className="zmdi zmdi-account material-icons-name"></i>
+                                        {/* <i className="zmdi zmdi-account material-icons-name"></i> */}
                                     </label>
                                     <input
                                         type="text"
@@ -67,7 +67,7 @@ function Login() {
                                 </div>
                                 <div className="form-group">
                                     <label for="your_pass">
-                                        <i className="zmdi zmdi-lock"></i>
+                                        {/* <i className="zmdi zmdi-lock"></i> */}
                                     </label>
                                     <input
                                         type="password"

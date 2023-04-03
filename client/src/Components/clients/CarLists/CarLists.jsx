@@ -4,23 +4,54 @@ import userAxios from "../../../Axios/userAxios.js";
 function CarLists() {
 
     const [carData, setCarData] = useState({});
+    const [show,setShow]=useState([])
+    const [SearchInput, setSearchInput] = useState("")
 
     useEffect(() => {
         userAxios
             .get("/cars")
             .then((response) => {
                 setCarData(response.data.data);
+                setShow(response.data.data)
             })
             .catch((error) => {
                 console.log(error);
             });
     }, []);
 
+    const handleChange = (event) => {
+          setSearchInput(event.target.value)
+        
+       if(event.target.value){
+        let filteredCar=show.filter((car)=>car.location.toLowerCase().indexOf(event.target.value.toLowerCase()) !== -1  )
+        setCarData(filteredCar)
+       }else{
+        setCarData(show)
+       }
+    }
+
+   
     return (
 
         <div class="container-fluid py-5">
             <div class="container pt-5 pb-3">
                 <h1 class="display-4 text-uppercase text-center mb-5 bg-warning">Find Your Car</h1>
+                <div className='mt-3 mb-5'>
+            <input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Search or Selec City..."
+                    onChange={handleChange}
+                    value={SearchInput}
+                    />
+
+             {carData.length > 0 && carData.map((car) => (
+            <datalist id="datalistOptions" key={car.location}>
+                <option value={car.location} />
+                {/* <option value="Kozhikode" />
+                <option value="Chennai" />
+                <option value="Bengaluru" />
+                <option value="Trivandrum" /> */}
+            </datalist>
+                 ))}
+        </div>
                 <div class="row">
 
                 {carData.length > 0 && carData.map((car) => (

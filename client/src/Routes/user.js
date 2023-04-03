@@ -14,7 +14,7 @@ function UserRoute() {
         <div>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/register" element={IsAuth ?<Register />:<Home />} />
+                <Route path="/register" element={IsAuth ?<Home />:<Register />} />
                 <Route path="/login" element={IsAuth? <Home /> : <UserLogin />} />
                 <Route path="/cars" element= {<Cars />}/>
             </Routes>
