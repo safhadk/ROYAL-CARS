@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { generateAuthToken} from "../middleware/auth.js";
+import { generateAuthToken } from "../middleware/auth.js";
 import userModel from "../models/userSchema.js";
 import car from "../models/car.js";
 
@@ -82,15 +82,53 @@ export const LoginPost = async (req, res, next) => {
 
 export const Cars = async (req, res, next) => {
     try {
-        const cars = await car.find({})
-        console.log(cars)
+        console.log("here")
+        console.log(req.query.id)
+        let cars;
+        if (req.query.id){
+            cars=await car.find({_id:req.query.id})
+        }else{
+            cars = await car.find({})
+        }
+        
         res.status(200)
-        .json({
-            data:cars
-        });
+            .json({
+                data: cars
+            });
     } catch (error) {
         res.json({ status: "failed", message: error.message });
         console.log(error.message)
     }
 };
+
+//Search
+
+export const Search = async (req, res) => {
+    const cars = await car.find({ location: { $regex: new RegExp('^' + req.body.city + '$', 'i') } })
+    console.log(cars[0])
+    console.log("hai ")
+    console.log(req.body)
+
+    const pickupTime = new Date(req.body.pickup);
+    const dropTime = new Date(req.body.drop);
+    
+    const timeDiff = dropTime - pickupTime; // difference in milliseconds
+    const oneDay = 24 * 60 * 60 * 1000; // number of milliseconds in a day
+    
+    let diffInDays = Math.floor(timeDiff / oneDay);
+    let diffInHours = Math.floor((timeDiff % oneDay) / (60 * 60 * 1000));
+    let diffInMonths = 0; // initialize month to 0
+    
+    const result = `${diffInMonths} month ${diffInDays} day ${diffInHours} hour`;
+    console.log(result);
+
+    let cardata = {
+        city: req.body.city,
+        pickup: req.body.pickup,
+        drop: req.body.drop,
+        days:diffInDays,
+        hours:diffInHours
+    }
+    res.json({ data: cars, bookingCarData: cardata })
+}
 

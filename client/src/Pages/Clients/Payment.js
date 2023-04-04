@@ -1,15 +1,16 @@
 import React from "react";
 import Header from "../../Components/clients/Header/Header";
-import CarLists from "../../Components/clients/CarLists/CarLists";
+import Payment from "../../Components/clients/Payment/Payment";
 
 
-function Cars() {
+
+function payment() {
     return (
         <div>
             <Header />
-            <CarLists/>
+             <Payment/>
         </div>
     );
 }
 
-export default Cars;
+export default payment;
