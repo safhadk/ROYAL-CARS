@@ -8,6 +8,7 @@ import UserLogin from "../Pages/Clients/Login";
 import Register from "../Pages/Clients/Register";
 import Cars from "../Pages/Clients/Cars";
 import Payment from '../Pages/Clients/Payment'
+import Bookings from "../Pages/Clients/Bookings";
 
 function UserRoute() {
     const IsAuth = useSelector((state) => state.Client.Token);
@@ -19,6 +20,7 @@ function UserRoute() {
                 <Route path="/login" element={IsAuth? <Home /> : <UserLogin />} />
                 <Route path="/cars" element= {<Cars />}/>
                 <Route path="/payment" element= {<Payment />}/>
+                <Route path="/bookings" element= {<Bookings />}/>
                 
             </Routes>
         </div>

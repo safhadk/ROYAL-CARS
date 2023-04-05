@@ -13,7 +13,6 @@ function Search() {
             .get("/cars")
             .then((response) => {
                 setCarData(response.data.data);
-
             })
             .catch((error) => {
                 console.log(error);

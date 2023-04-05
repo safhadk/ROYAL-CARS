@@ -83,18 +83,46 @@ export const LoginPost = async (req, res, next) => {
 export const Cars = async (req, res, next) => {
     try {
         console.log("here")
+        console.log(req.query)
+      
         console.log(req.query.id)
+        console.log(req.query.pickup)
+        console.log(req.query.drop)
         let cars;
         if (req.query.id){
             cars=await car.find({_id:req.query.id})
+            console.log(cars)
+            const pickupTime = new Date(req.query.pickup);
+            const dropTime = new Date(req.query.drop);
+            
+            const timeDiff = dropTime - pickupTime; // difference in milliseconds
+            const oneDay = 24 * 60 * 60 * 1000; // number of milliseconds in a day
+            
+            let diffInDays = Math.floor(timeDiff / oneDay);
+            let diffInHours = Math.floor((timeDiff % oneDay) / (60 * 60 * 1000));
+            let diffInMonths = 0; // initialize month to 0
+
+            const result = `${diffInMonths} month ${diffInDays} day ${diffInHours} hour`;
+            console.log(result);
+            let totalrent;
+            totalrent = diffInDays%30*parseInt(cars[0].perDayCharge) + Math.floor(diffInDays/30)*parseInt(cars[0].perMonthCharge) + diffInHours*parseInt(cars[0].perHourCharge) 
+            console.log(totalrent)
+
+            res.status(200)
+            .json({
+                data: cars,
+                rentAmount:totalrent,
+            });
         }else{
             cars = await car.find({})
-        }
+        
         
         res.status(200)
             .json({
-                data: cars
+                data: cars,
+               
             });
+        }
     } catch (error) {
         res.json({ status: "failed", message: error.message });
         console.log(error.message)
@@ -119,7 +147,7 @@ export const Search = async (req, res) => {
     let diffInHours = Math.floor((timeDiff % oneDay) / (60 * 60 * 1000));
     let diffInMonths = 0; // initialize month to 0
     
-    const result = `${diffInMonths} month ${diffInDays} day ${diffInHours} hour`;
+    const result = `search : ${diffInMonths} month ${diffInDays} day ${diffInHours} hour`;
     console.log(result);
 
     let cardata = {
