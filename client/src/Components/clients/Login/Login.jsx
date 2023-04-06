@@ -23,7 +23,7 @@ function Login() {
             if (result.Status) {
                 const token = result.token;
                 const name = result.name
-                dispatch(ClientLogin({ token: token,name:name }));
+                dispatch(ClientLogin({ token: token,name:name}));
                 navigate("/");
             } else {
                 setErrMsg(result.message);

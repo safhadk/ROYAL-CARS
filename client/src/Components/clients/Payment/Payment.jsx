@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import userAxios from "../../../Axios/userAxios.js";
+import Paypal from '../Paypal/Paypal.jsx';
+import { PayPalScriptProvider} from "@paypal/react-paypal-js";
+import { useDispatch,useSelector  } from "react-redux";
+import { OwnerLogin } from '../../../Redux/OwnerAuth.js';
+
+
 
 function Payment() {
   const [carData, setCarData] = useState([]);
   const [rent, setRent] = useState(null)
+  const [advance ,setAdvance ] = useState(0)
   let location = useLocation()
   let car = location.state.bookingCarData
 
@@ -14,10 +21,12 @@ function Payment() {
       .then((response) => {
         setCarData(response.data.data);
         setRent(response.data.rentAmount)
+        setAdvance(response.data.rentAmount * 0.1)
       })
       .catch((error) => {
         console.log(error);
       });
+
 
   }, [location.state.id]);
 
@@ -125,6 +134,7 @@ function Payment() {
 
               <div class='form-group'>
                 <h1 class='text-white'>Balance Amount (Pay to Car Owner) : ₹ {rent - ((rent * 10) / 100)}</h1>
+                
               </div>
 
 
@@ -149,8 +159,13 @@ function Payment() {
               </div>
 
               <div class="form-group mb-0">
-                <button class="btn btn-success btn-block" type="submit" style={{ height: '50px', backgroundColor: "green" }}>Pay Advance Now ₹ {(rent * 10) / 100}</button>
-
+                {/* <button class="btn btn-success btn-block" type="submit" style={{ height: '50px', backgroundColor: "green" }}>Pay Advance Now ₹ {(rent * 10) / 100}</button> */}
+                {/* <PayPalScriptProvider options={{ "client-id": "test" }}>
+                <PayPalButtons style={{ layout: "horizontal" }} />
+               </PayPalScriptProvider> */}
+              <PayPalScriptProvider options={{ "client-id":process.env.REACT_APP_ClientId }}>
+               <Paypal advance={advance}/>
+              </PayPalScriptProvider>
               </div>
             </div>
           </div>

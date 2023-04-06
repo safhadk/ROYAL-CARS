@@ -4,7 +4,7 @@ export const ClientAuth = createSlice({
     name: "Client",
     initialState: {
         Token: null,
-        name:null
+        name:null,
     },
     reducers: {
         ClientLogin(state, action) {
@@ -14,6 +14,7 @@ export const ClientAuth = createSlice({
         ClientLogout(state, action) {
             state.Token = "";
             state.name = "";
+
         },
     },
 });

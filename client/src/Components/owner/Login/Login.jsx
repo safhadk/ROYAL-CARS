@@ -20,7 +20,7 @@ function Login() {
             if (result.Status) {
                 const token = result.token;
                 const name = result.name
-                dispatch(OwnerLogin({ token: token,name:name }));
+                dispatch(OwnerLogin({ token: token,name:name,advance:0 }));
                 navigate("/owner");
             } else {
                 setErrMsg(result.message);

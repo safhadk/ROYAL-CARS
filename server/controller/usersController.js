@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import { generateAuthToken } from "../middleware/auth.js";
 import userModel from "../models/userSchema.js";
 import car from "../models/car.js";
+import * as paypal from "../middleware/paypal-api.js";
+import bookings from "../models/bookings.js";
 
 //user Registration
 
@@ -45,6 +47,7 @@ export const LoginPost = async (req, res, next) => {
         message: null,
         token: null,
         name: null,
+        advance:101
     };
 
     try {
@@ -59,6 +62,7 @@ export const LoginPost = async (req, res, next) => {
                 userSignUp.Status = true;
                 userSignUp.token = token;
                 userSignUp.name = findUser.name;
+
 
                 res.status(200)
                     .send({ userSignUp });
@@ -132,31 +136,65 @@ export const Cars = async (req, res, next) => {
 //Search
 
 export const Search = async (req, res) => {
-    const cars = await car.find({ location: { $regex: new RegExp('^' + req.body.city + '$', 'i') } })
-    console.log(cars[0])
-    console.log("hai ")
-    console.log(req.body)
-
-    const pickupTime = new Date(req.body.pickup);
-    const dropTime = new Date(req.body.drop);
+    try {
+        const cars = await car.find({ location: { $regex: new RegExp('^' + req.body.city + '$', 'i') } })
+        console.log(cars[0])
+        console.log("hai ")
+        console.log(req.body)
     
-    const timeDiff = dropTime - pickupTime; // difference in milliseconds
-    const oneDay = 24 * 60 * 60 * 1000; // number of milliseconds in a day
+        const pickupTime = new Date(req.body.pickup);
+        const dropTime = new Date(req.body.drop);
+        
+        const timeDiff = dropTime - pickupTime; // difference in milliseconds
+        const oneDay = 24 * 60 * 60 * 1000; // number of milliseconds in a day
+        
+        let diffInDays = Math.floor(timeDiff / oneDay);
+        let diffInHours = Math.floor((timeDiff % oneDay) / (60 * 60 * 1000));
+        let diffInMonths = 0; // initialize month to 0
+        
+        const result = `search : ${diffInMonths} month ${diffInDays} day ${diffInHours} hour`;
+        console.log(result);
     
-    let diffInDays = Math.floor(timeDiff / oneDay);
-    let diffInHours = Math.floor((timeDiff % oneDay) / (60 * 60 * 1000));
-    let diffInMonths = 0; // initialize month to 0
-    
-    const result = `search : ${diffInMonths} month ${diffInDays} day ${diffInHours} hour`;
-    console.log(result);
-
-    let cardata = {
-        city: req.body.city,
-        pickup: req.body.pickup,
-        drop: req.body.drop,
-        days:diffInDays,
-        hours:diffInHours
+        let cardata = {
+            city: req.body.city,
+            pickup: req.body.pickup,
+            drop: req.body.drop,
+            days:diffInDays,
+            hours:diffInHours
+        }
+        res.status(200).json({ data: cars, bookingCarData: cardata })
+    } catch (err) {
+        console.log(err.message)
+        res.status(500).send(err.message);
     }
-    res.json({ data: cars, bookingCarData: cardata })
+   
 }
 
+//create order 
+
+export const CreateOrder=async(req,res)=>{
+    try {
+        console.log(req.body+"req.body in create order 789")
+        console.log(req.body.car.cost+" cost in create order 5664")
+        const order = await paypal.createOrder(req.body);
+        console.log(order + "order created 655")
+        res.json(order);
+        console.log("response passed 987")
+      } catch (err) {
+          console.log(err.message + "error occured in create order")
+          res.status(500).send(err.message);
+      }
+}
+
+//verify payment
+
+export const VerifyPayment=async(req,res)=>{
+    try {
+      const { orderID} = req.body
+      const captureData = await paypal.capturePayment(orderID);
+      res.json(captureData);
+    } catch (err) {
+      res.status(500).send(err.message);
+      console.log(err.message)
+    }
+}
