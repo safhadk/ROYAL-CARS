@@ -25,7 +25,6 @@ export const Store = configureStore({
                 ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
             }
         })
-    
 });
 
 

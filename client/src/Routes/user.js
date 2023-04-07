@@ -20,8 +20,7 @@ function UserRoute() {
                 <Route path="/login" element={IsAuth? <Home /> : <UserLogin />} />
                 <Route path="/cars" element= {<Cars />}/>
                 <Route path="/payment" element= {<Payment />}/>
-                <Route path="/bookings" element= {<Bookings />}/>
-                
+                <Route path="/bookings" element= {<Bookings />}/>  
             </Routes>
         </div>
     );

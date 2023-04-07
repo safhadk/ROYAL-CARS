@@ -7,7 +7,6 @@ import './Header.css'
 function Header() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const owner = useSelector((state) => state.Owner.Token);
     const name = useSelector((state) => state.Owner.name);
     const logout = () => {
@@ -109,9 +108,6 @@ function Header() {
                     </button>
                      
                     )}
-                    {/* <h6 className="text-white me-4" onClick={logout}>
-                        Logout
-                    </h6> */}
                 </div>
             </div>
         </nav>

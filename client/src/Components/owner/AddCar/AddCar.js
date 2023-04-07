@@ -1,9 +1,8 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import ownerAxios from "../../../Axios/ownerAxios.js";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
-
 
 function AddCars() {
 
@@ -11,8 +10,8 @@ function AddCars() {
 
   const handleImageChange = (e) => {
 
-  setImages([...images, e.target.files[0]]);
-};
+    setImages([...images, e.target.files[0]]);
+  };
 
   const navigate = useNavigate();
   const [carModel, setCarModel] = useState("")
@@ -44,26 +43,22 @@ function AddCars() {
     },
   });
 
-const handleAddCar = async (e) => {
-  e.preventDefault();
-  console.log(images);
-  const formData = new FormData();
-  console.log("formdata" + formData)
-  images.forEach((image, index) => {
-    formData.append('image', image);
-  });
-  formData.append('carModel', String(carModel));
-  formData.append('location', String(location));
-  formData.append('registrationNumber', String(registrationNumber));
-  formData.append('perHourCharge', String(perHourCharge));
-  formData.append('perDayCharge', String(perDayCharge));
-  formData.append('perMonthCharge', String(perMonthCharge));
-  formData.append('place', String(place));
-  formData.append('seater', String(seater));
-  formData.append('transmission', String(transmission));
-  formData.append('fuel', String(fuel));
-
-  console.log(formData)
+  const handleAddCar = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    images.forEach((image, index) => {
+      formData.append('image', image);
+    });
+    formData.append('carModel', String(carModel));
+    formData.append('location', String(location));
+    formData.append('registrationNumber', String(registrationNumber));
+    formData.append('perHourCharge', String(perHourCharge));
+    formData.append('perDayCharge', String(perDayCharge));
+    formData.append('perMonthCharge', String(perMonthCharge));
+    formData.append('place', String(place));
+    formData.append('seater', String(seater));
+    formData.append('transmission', String(transmission));
+    formData.append('fuel', String(fuel));
 
     const addCar = await ownerAxios.post("/addCar", formData, {
       headers: {
@@ -72,9 +67,7 @@ const handleAddCar = async (e) => {
       },
     })
       .then((res) => {
-        console.log(res.data);
         if (res.data.status === "success") {
-          console.log(res.data)
           Toast.fire({
             icon: "success",
             title: "Car Added",
@@ -86,17 +79,15 @@ const handleAddCar = async (e) => {
             icon: "error",
             title: "Somthing went wrong",
           }).then(() => {
-            console.log("error safad")
             navigate("/owner");
           });
         }
       });
   };
 
-
   return (
     <>
-      <button className="btn-sm btn-dark ml-3 mt-4 mb-3" onClick={() => {navigate("/owner/cars"); }}>
+      <button className="btn-sm btn-dark ml-3 mt-4 mb-3" onClick={() => { navigate("/owner/cars"); }}>
         <i className="fa fa-arrow-circle-left" aria-hidden="true"></i> Go Back
       </button>
       <div className="container-fluid" style={{ backgroundColor: "#2B2E4A" }}>
@@ -123,7 +114,7 @@ const handleAddCar = async (e) => {
                       <option value="Chennai">Chennai</option>
                       <option value="Hyderabad">Hyderabad</option>
                       <option value="Bengaluru">Bengaluru</option>
-                      
+
                     </select>
                   </div>
                 </div>
@@ -181,7 +172,7 @@ const handleAddCar = async (e) => {
                   </div>
                 </div>
 
-               
+
 
                 <div className="form-group row">
                   <div className="col-sm-12">
@@ -204,88 +195,73 @@ const handleAddCar = async (e) => {
                     }} />
                   </div>
                 </div>
-              
+
                 <div className="form-group row">
-        <div className="col-sm-8">
-          <input
-            type="file"
-            className="form-control"
-            id="0"
-            name="image"
-            placeholder="Image:"
-            onChange={handleImageChange}
-          />
-          {/* {images[0] && (
-            <img
-              src={URL.createObjectURL(images[0])}
-              alt="Preview"
-              style={{ maxWidth: "100px", maxHeight: "100px" }}
-            />
-          )} */}
-        </div>
-      </div>
+                  <div className="col-sm-8">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="0"
+                      name="image"
+                      placeholder="Image:"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                </div>
 
-      <div className="form-group row">
-  <div className="col-sm-8">
-    <input
-      type="file"
-      className="form-control"
-      id="1"
-      name="image"
-      placeholder="Image:"
-      onChange={handleImageChange}
-    />
-  </div>
-</div>
+                <div className="form-group row">
+                  <div className="col-sm-8">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="1"
+                      name="image"
+                      placeholder="Image:"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                </div>
 
-<div className="form-group row">
-  <div className="col-sm-8">
-    <input
-      type="file"
-      className="form-control"
-      id="2"
-      name="image"
-      placeholder="Image:"
-      onChange={handleImageChange}
-    />
-  </div>
-</div>
+                <div className="form-group row">
+                  <div className="col-sm-8">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="2"
+                      name="image"
+                      placeholder="Image:"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                </div>
 
-<div className="form-group row">
-  <div className="col-sm-8">
-    <input
-      type="file"
-      className="form-control"
-      id="3"
-      name="image"
-      placeholder="Image:"
-      onChange={handleImageChange}
-    />
-  </div>
-</div>
-
-
-
-
+                <div className="form-group row">
+                  <div className="col-sm-8">
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="3"
+                      name="image"
+                      placeholder="Image:"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                </div>
                 <div className="form-group row">
                   <div className="col-sm-8 offset-sm-4">
                     <button type="submit" className="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                       Add Car
                     </button>
-
-
                   </div>
                 </div>
               </form>
               <div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </>
-
 
   );
 }

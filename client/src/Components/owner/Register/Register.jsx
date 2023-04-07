@@ -14,10 +14,10 @@ function OwnerRegister() {
 
     const navigate = useNavigate();
 
-    const signUpForm = (event) => {
+    const signUpForm = async (event) => {
         event.preventDefault();
 
-        ownerAxios.post("/register", { name, email, phone, password }).then((res) => {
+        await ownerAxios.post("/register", { name, email, phone, password }).then((res) => {
             if (res.data.status) {
                 navigate("/owner");
             } else {
@@ -36,7 +36,6 @@ function OwnerRegister() {
                             <form method="POST" className="register-form" onSubmit={signUpForm} id="register-form">
                                 <div className="form-group">
                                     <label for="name">
-                                        {/* <i className="zmdi zmdi-account material-icons-name"></i> */}
                                     </label>
                                     <input
                                         type="text"
@@ -51,7 +50,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="email">
-                                        {/* <i className="zmdi zmdi-email"></i> */}
+                                
                                     </label>
                                     <input
                                         type="email"
@@ -66,7 +65,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="pass">
-                                        {/* <i class="fa-sharp fa-solid fa-address-book"></i> */}
+                                 
                                     </label>
                                     <input
                                         type="text"
@@ -81,7 +80,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="re-pass">
-                                        {/* <i className="zmdi zmdi-lock-outline"></i> */}
+                           
                                     </label>
                                     <input
                                         type="password"

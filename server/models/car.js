@@ -39,7 +39,16 @@ const carSchema = new Schema({
     }, 
     images: {
         type: Array,
-      },
+    },
+    onRent:{
+        type:Boolean,
+        default:false,
+        required:true
+    },
+    status:{
+        type:String
+    }
+
 });
 
 const car = mongoose.model("car", carSchema);

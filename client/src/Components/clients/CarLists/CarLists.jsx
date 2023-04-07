@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import userAxios from "../../../Axios/userAxios.js";
-
 import { useNavigate } from 'react-router-dom';
 
 function CarLists() {
@@ -13,28 +12,21 @@ function CarLists() {
     const [bookingCarData, setbookingCarData] = useState({})
     let length = Object.keys(bookingCarData).length
 
-    useEffect(() => {
-        userAxios
-            .get("/cars")
-            .then((response) => {
-                setCarData(response.data.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+    useEffect( () => {
+         userAxios.get("/cars").then((response) => {
+            setCarData(response.data.data);
+        }).catch((error) => {
+            console.log(error);
+        });
     }, []);
 
     const handleSearch = async () => {
-        console.log('button clicked')
-        await userAxios
-            .post("/search", { city, pickup, drop })
-            .then((res) => {
-                setCarData(res.data.data);
-                setbookingCarData(res.data.bookingCarData)
-            })
-            .catch((e) => {
-                console.log(e.message);
-            });
+        await userAxios.post("/search", { city, pickup, drop }).then((res) => {
+            setCarData(res.data.data);
+            setbookingCarData(res.data.bookingCarData)
+        }).catch((e) => {
+            console.log(e.message);
+        });
     }
 
     return (
@@ -58,7 +50,7 @@ function CarLists() {
                                 ))}
                             </datalist>
                         </div>
-                      
+
                         <div class="col-xl-2 col-lg-4 col-md-6 px-2">
                             <div class="date mb-3" id="date" data-target-input="nearest">
                                 <input type="datetime-local" class="form-control datetimepicker-input" placeholder="Pickup Date"
@@ -82,16 +74,16 @@ function CarLists() {
 
                 <div class="row">
 
-
                     {carData.length === 0 &&
-                        <h1 className='text-danger mt-5'>We're sorry, but we could not find any cars available for your selected dates and location. Please try a different search.</h1>   
+                        <h1 className='text-danger mt-5'>We're sorry, but we could not find any cars available for your selected dates or location. Please try a different search.</h1>
                     }
 
                     {carData.length > 0 && carData.map((car) => (
                         <div class="col-lg-4 col-md-6 mb-2" key={car.carModel}>
                             <div class="rent-item mb-4">
                                 <img class="img-fluid mb-4" src={`/safad/${car.images[0]}`} alt="" />
-                                <h4 class="text-uppercase mb-4">{car.carModel}</h4>
+                                <h4 class="text-uppercase mb-3">{car.carModel}</h4>
+                                {car.status === "Available" ? <h6 className=' text-success mb-1'>{car.status}</h6> : <h6 className=' text-danger mb-1'>{car.status}</h6>}
                                 <div class="d-flex justify-content-center mb-4">
                                     <div class="px-2">
                                         <i class="fa fa-car text-warning mr-1"></i>
@@ -116,11 +108,12 @@ function CarLists() {
                                         <span>{car.place}</span>
                                     </div>
                                 </div>
+
                                 <h6 class="btn btn-warning px-3 m-1">₹{car.perHourCharge}/Hour</h6>
                                 <h6 class="btn btn-warning px-3 m-1" >₹{car.perDayCharge}/Day</h6>
                                 <h6 class="btn btn-warning px-3 m-1" >₹{car.perMonthCharge}/Month</h6>
 
-                                {length > 0 && <h6 class="btn btn-success px-3 m-1" onClick={() => Navigate('/payment', { state: { id: car._id, bookingCarData: bookingCarData } })} >Rent Now</h6>}
+                                {length > 0 && car.status === "Available" && (<h6 class="btn btn-success px-3 m-1" onClick={() => Navigate('/payment', { state: { id: car._id, bookingCarData: bookingCarData } })} >Rent Now</h6>)}
 
                             </div>
                         </div>

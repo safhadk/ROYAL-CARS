@@ -6,15 +6,13 @@ const { CLIENT_ID, APP_SECRET } = process.env;
 const base = "https://api-m.sandbox.paypal.com";
 
 export async function createOrder(data) {
-  console.log(data.car.cost + "cost..............")
   const accessToken = await generateAccessToken();
-  console.log(accessToken + "tok")
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
     method: "post",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({
       intent: "CAPTURE",
@@ -47,11 +45,7 @@ export async function capturePayment(orderId) {
 }
 
 export async function generateAccessToken() {
-    console.log("genereta")
-    console.log(CLIENT_ID)
-    console.log(APP_SECRET);
   const auth = Buffer.from(CLIENT_ID + ":" + APP_SECRET).toString("base64");
-  console.log(auth + "auth here")
   const response = await fetch(`${base}/v1/oauth2/token`, {
     method: "post",
     body: "grant_type=client_credentials",
@@ -59,8 +53,6 @@ export async function generateAccessToken() {
       Authorization: `Basic ${auth}`,
     },
   });
-
-  console.log(response.status + "response here")
 
   const jsonData = await handleResponse(response);
   return jsonData.access_token;

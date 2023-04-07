@@ -13,9 +13,9 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
    
-    const LoginFormPost = (e) => {
+    const LoginFormPost =async  (e) => {
         e.preventDefault();
-        ownerAxios.post("/login", { email, password }).then((res) => {
+        await ownerAxios.post("/login", { email, password }).then((res) => {
             const result = res.data.ownerSignUp;
             if (result.Status) {
                 const token = result.token;
@@ -67,7 +67,6 @@ function Login() {
                                 </div>
                                 <div className="form-group">
                                     <label for="your_pass">
-                                        {/* <i className="zmdi zmdi-lock"></i> */}
                                     </label>
                                     <input
                                         type="password"

@@ -5,7 +5,6 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
       const uploadPath = '../client/public/safad';
 
- 
     console.log("multer here")
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath);

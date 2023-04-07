@@ -7,7 +7,7 @@ router.post("/register", Register);
 router.post("/login", LoginPost);
 router.get("/cars", Cars);
 router.post('/search',Search)
-router.post('/createOrder',CreateOrder)
-router.post('/verifyPayment',VerifyPayment)
+router.post('/createOrder',verifyToken,CreateOrder)
+router.post('/verifyPayment',verifyToken,VerifyPayment)
 
 export default router;

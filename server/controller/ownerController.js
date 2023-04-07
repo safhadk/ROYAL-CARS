@@ -30,19 +30,20 @@ export const Register = async (req, res, next) => {
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
+        console.log(error.message)
     }
 };
 
 //owner login submit
 
 export const LoginPost = async (req, res, next) => {
-    let ownerSignUp = {
-        Status: false,
-        message: null,
-        token: null,
-        name: null,
-    };
     try {
+        let ownerSignUp = {
+            Status: false,
+            message: null,
+            token: null,
+            name: null,
+        };
         const ownerDetails = req.body;
         const findowner = await ownerModel.findOne({ email: ownerDetails.email });
         if (findowner) {
@@ -69,6 +70,7 @@ export const LoginPost = async (req, res, next) => {
         }
     } catch (error) {
         res.json({ status: "failed", message: error.message });
+        console.log(error.message)
     }
 };
 
@@ -83,6 +85,7 @@ export const Cars = async (req, res, next) => {
             });
         } catch (error) {
             res.json({ status: "failed", message: error.message });
+            console.log(error.message)
         }
     };
 
@@ -116,8 +119,7 @@ export const addCar = async (req, res, next) => {
                 console.log(error);
                 res.json({ status: "failed", message: error.message });
             });
-
-            
+  
     } catch (error) {
         console.log(error.message)
     }

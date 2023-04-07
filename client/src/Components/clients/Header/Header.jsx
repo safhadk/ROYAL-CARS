@@ -37,40 +37,31 @@ function Header() {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a
-                                class="nav-link active"
-                                
-                                onClick={() => {
-                                    navigate("/");
-                                }}
-                                aria-current="page"
-                            >
+                            <a class="nav-link active" onClick={() => {navigate("/")}}
+                            aria-current="page">
                                 <b>Home</b>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a
-                                class="nav-link"
+                            <a class="nav-link"
                                 onClick={() => {
-                                    navigate("/cars");
+                                navigate("/cars");
                                 }}
                             >
                                 <b>Cars</b>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a
-                                class="nav-link"
+                            <a class="nav-link"
                                 onClick={() => {
-                                    navigate("/bookings");
+                                navigate("/bookings");
                                 }}
                             >
                                 <b>Bookings</b>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a
-                                class="nav-link"
+                            <a class="nav-link"
                                 onClick={() => {
                                     navigate("/profile");
                                 }}
@@ -82,10 +73,9 @@ function Header() {
                     </ul>
                    
                     {user ? (
-                        <h6
-                            className="text-white me-4"
+                        <h6 className="text-white me-4"
                             onClick={() => {
-                                navigate("/profile");
+                            navigate("/profile");
                             }}
                         >
                             {name}
@@ -93,22 +83,17 @@ function Header() {
                     ) : null}
                     {user ? (
                        
-                     
                         <button className="btn btn-warning me-4" onClick={logout}>
                         Logout
                     </button>
                    
-                    
                     ) : (
-                       
                         <button className="btn text-white me-4" style={{backgroundColor:'#F77D0A'}} onClick={logout}>
                         Login
                     </button>
                      
                     )}
-                    {/* <h6 className="text-white me-4" onClick={logout}>
-                        Logout
-                    </h6> */}
+                   
                 </div>
             </div>
         </nav>

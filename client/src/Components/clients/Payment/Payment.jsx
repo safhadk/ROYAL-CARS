@@ -2,22 +2,30 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import userAxios from "../../../Axios/userAxios.js";
 import Paypal from '../Paypal/Paypal.jsx';
-import { PayPalScriptProvider} from "@paypal/react-paypal-js";
-import { useDispatch,useSelector  } from "react-redux";
-import { OwnerLogin } from '../../../Redux/OwnerAuth.js';
-
-
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 function Payment() {
   const [carData, setCarData] = useState([]);
-  const [rent, setRent] = useState(null)
-  const [advance ,setAdvance ] = useState(0)
-  let location = useLocation()
-  let car = location.state.bookingCarData
+  const [rent, setRent] = useState(null);
+  const [advance, setAdvance] = useState(0);
+  let location = useLocation();
+  let car = location.state.bookingCarData;
+  const carId = location.state.id;
+  const ownerAmount = rent - ((rent * 10) / 100);
+  const TotalAmount = rent;
+
+  const bookingData = {
+    advance,
+    carId,
+    ownerAmount,
+    TotalAmount,
+    pickup: car.pickup,
+    drop: car.drop
+  }
 
   useEffect(() => {
-    userAxios
-      .get(`/cars?id=${location.state.id}&pickup=${car.pickup}&drop=${car.drop}`)
+
+    userAxios.get(`/cars?id=${location.state.id}&pickup=${car.pickup}&drop=${car.drop}`)
       .then((response) => {
         setCarData(response.data.data);
         setRent(response.data.rentAmount)
@@ -27,8 +35,7 @@ function Payment() {
         console.log(error);
       });
 
-
-  }, [location.state.id]);
+  }, []);
 
   return (
 
@@ -134,7 +141,7 @@ function Payment() {
 
               <div class='form-group'>
                 <h1 class='text-white'>Balance Amount (Pay to Car Owner) : ₹ {rent - ((rent * 10) / 100)}</h1>
-                
+
               </div>
 
 
@@ -163,9 +170,14 @@ function Payment() {
                 {/* <PayPalScriptProvider options={{ "client-id": "test" }}>
                 <PayPalButtons style={{ layout: "horizontal" }} />
                </PayPalScriptProvider> */}
-              <PayPalScriptProvider options={{ "client-id":process.env.REACT_APP_ClientId }}>
-               <Paypal advance={advance}/>
-              </PayPalScriptProvider>
+                {
+                  advance !== 0 && (
+                    <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_ClientId }}>
+                      <Paypal advance={advance} bookingData={bookingData} />
+                    </PayPalScriptProvider>
+                  )
+                }
+
               </div>
             </div>
           </div>

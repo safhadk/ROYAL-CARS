@@ -5,7 +5,6 @@ import UserRoute from "./Routes/user";
 import OwnerRoute from "./Routes/owner";
 import './App.css'
 
-
 function App() {
     return (
         <div className="App">

@@ -11,10 +11,10 @@ function UserRegister() {
 
     const navigate = useNavigate();
 
-    const signUpForm = (event) => {
+    const signUpForm = async (event) => {
         event.preventDefault();
 
-        userAxios.post("/register", { name, email, phone, password }).then((res) => {
+       await userAxios.post("/register", { name, email, phone, password }).then((res) => {
             if (res.data.status) {
                 navigate("/login");
             } else {
@@ -96,8 +96,6 @@ function UserRegister() {
                     <button type="submit" className="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300">
                       Register
                     </button>
-
-
                   </div>
                 </div>
                             </form>
