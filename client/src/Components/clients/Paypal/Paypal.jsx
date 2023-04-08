@@ -50,12 +50,8 @@ function Paypal(props) {
            Authorization: `Bearer ${token}`,
         }
     }).then((response) => {
-         Toast.fire({
-         icon: "success",
-         title: "Booking Success",
-          }).then(()=>{
-            navigate("/bookings");
-          })
+            navigate("/success");
+   
     }).catch((e)=>{
       console.log(e.message)
       if(e.message==="Request failed with status code 404"){

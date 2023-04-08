@@ -50,7 +50,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="email">
-                                
+
                                     </label>
                                     <input
                                         type="email"
@@ -65,7 +65,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="pass">
-                                 
+
                                     </label>
                                     <input
                                         type="text"
@@ -80,7 +80,7 @@ function OwnerRegister() {
                                 </div>
                                 <div className="form-group">
                                     <label for="re-pass">
-                           
+
                                     </label>
                                     <input
                                         type="password"

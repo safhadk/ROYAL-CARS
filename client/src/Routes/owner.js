@@ -15,7 +15,7 @@ function OwnerRoute() {
                 <Route path="/" element={IsAuth ?<Home />: <Login />} />
                 <Route path="/register" element={IsAuth ? <Home />: <Register />} />
                 <Route path="/login" element={IsAuth ? <Home /> : <Login />} />
-                <Route path='/cars' element={IsAuth ? <Cars/>:<Login/>}/>
+                <Route path='/cars' element={IsAuth ? <Cars/>:<Navigate to='/owner/login'/>}/>
                 <Route path='/add-car' element={IsAuth ? <AddCar/>:<Navigate to='/owner/login'/>}/>    
             </Routes>
         </div>

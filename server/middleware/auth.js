@@ -2,11 +2,11 @@ import jwt from "jsonwebtoken";
 
 export const verifyToken = async (req, res, next) => {
     try {
-         let token = req.header("Authorization");
+        let token = req.header("Authorization");
         console.log(token)
         console.log(req.headers)
         console.log(req.header)
-       console.log("verifying")
+        console.log("verifying")
         if (!token) return res.status(404).json({ message: "Authentication failed: no token provided." });
 
         if (token.startsWith("Bearer ")) {
