@@ -6,6 +6,7 @@ import ownerAxios from "../../../Axios/ownerAxios.js";
 function CarLists() {
     const navigate = useNavigate();
     const [carData, setCarData] = useState({});
+    const [verification,setVerification] = useState(false)
     let token = useSelector((state) => state.Owner.Token);
 
     if (!token) {
@@ -19,6 +20,7 @@ function CarLists() {
             })
             .then((response) => {
                 setCarData(response.data.data);
+                setVerification(response.data.verification)
             })
             .catch((error) => {
                 console.log(error);
@@ -27,13 +29,12 @@ function CarLists() {
 
    
     return (
-
         <div class="container-fluid py-5">
             <div class="container pt-5 pb-3">
 
                 <h1 class="display-4 text-uppercase text-center mb-5 bg-warning">Find Your Car</h1>
                 <button className="btn text-white me-4 mb-3" style={{ backgroundColor: '#F77D0A' }} onClick={() => {
-                    navigate("/owner/add-car");
+                   {verification===true ? navigate("/owner/add-car"):navigate("/owner/profile")}
                 }} >
                     Add New Car
                 </button>
@@ -75,6 +76,8 @@ function CarLists() {
                         </div>
                     </div>
                      ))}
+
+                     {carData.length===0 && <h1 class="text-danger"> No cars Added Add Your First Car</h1>}
                 </div>
             </div>
         </div>

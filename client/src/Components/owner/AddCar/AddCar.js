@@ -114,7 +114,6 @@ function AddCars() {
                       <option value="Chennai">Chennai</option>
                       <option value="Hyderabad">Hyderabad</option>
                       <option value="Bengaluru">Bengaluru</option>
-
                     </select>
                   </div>
                 </div>
@@ -171,8 +170,6 @@ function AddCars() {
                     }} />
                   </div>
                 </div>
-
-
 
                 <div className="form-group row">
                   <div className="col-sm-12">

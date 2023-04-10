@@ -220,3 +220,18 @@ export const VerifyPayment = async (req, res) => {
         console.log(err.message)
     }
 }
+
+export const Bookings=async(req,res)=>{
+    try {
+        const booking=await bookings.find({user:req.user._id}).populate('car')
+        
+        
+       
+        res.status(200).json(booking)
+        console.log(booking)
+        console.log(booking.length)
+}
+  catch (error) {
+        console.log(error.messsage)
+    }
+}

@@ -27,101 +27,104 @@ function OwnerRegister() {
     };
 
     return (
-        <div>
-            <section className="signUp">
-                <div className="container_login" style={{ marginTop: "100px" }}>
-                    <div className="signUp-content">
-                        <div className="signUp-form">
-                            <h2 className="form-title">Sign up Owner</h2>
-                            <form method="POST" className="register-form" onSubmit={signUpForm} id="register-form">
-                                <div className="form-group">
-                                    <label for="name">
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        id="name"
-                                        value={name}
-                                        onChange={(e) => {
-                                            setName(e.target.value);
-                                        }}
-                                        placeholder="Your Name"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label for="email">
+    
+<section class="vh-100" style={{backgroundColor:' #2B2E4A'}}>
+<div class="container py-5 h-100">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col col-xl-10">
+      <div class="card" style={{borderRadius: '1rem'}}>
+        <div class="row g-0">
+          <div class="col-md-6 col-lg-5 d-none d-md-block">
+            <img src="/safad/login-vertical4.jpg"
+              alt="login form" class="img-fluid" style={{borderRadius: '15px',height:'675px'}} />
+          </div>
+          <div class="col-md-6 col-lg-7 d-flex align-items-center">
+            <div class="card-body p-4 p-lg-5 text-black">
 
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        id="email"
-                                        value={email}
-                                        onChange={(e) => {
-                                            setEmail(e.target.value);
-                                        }}
-                                        placeholder="Your Email"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label for="pass">
+              <form method="post" onSubmit={signUpForm}>
 
-                                    </label>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        id="phone"
-                                        value={phone}
-                                        onChange={(e) => {
-                                            setPhone(e.target.value);
-                                        }}
-                                        placeholder="Your Dial number"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label for="re-pass">
-
-                                    </label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        id="password"
-                                        value={password}
-                                        onChange={(e) => {
-                                            setPassword(e.target.value);
-                                        }}
-                                        placeholder="Enter your Password"
-                                    />
-                                </div>
-                                <div className="form-group form-button">
-                                    <input
-                                        type="submit"
-                                        name="signUp"
-                                        id="signUp"
-                                        className="form-submit"
-                                        value="Register"
-                                    />
-                                </div>
-                            </form>
-                            {errMsg ? <div style={{ color: "red" }}>{errMsg}</div> : ""}
-                        </div>
-                        <div className="signUp-image">
-                            <figure>
-                                <img src={"/safad/owner-signup.jpg"} alt="sing up image" />
-                            </figure>
-                            <a
-                                onClick={() => {
-                                    navigate("/owner");
-                                }}
-                                className="signUp-image-link"
-                            >
-                                I am already member
-                            </a>
-                        </div>
-                    </div>
+                <div class="d-flex align-items-center mb-3 pb-1">
+                  <i class="fas fa-car fa-2x me-3" style={{color: '#ff6219'}}></i>
+                 
+                  <span class="h1 fw-bold mb-0" >ROYAL CARS </span>
                 </div>
-            </section>
+
+                <h5 class="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Register for new Account</h5>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="form2Example17" class="form-control form-control-lg"
+                 value={name}
+                                                 onChange={(e) => {
+                                                     setName(e.target.value);
+                                                 }}
+                                                 placeholder="Your Name" />
+                  {/* <label class="form-label" for="form2Example17">Email address</label> */}
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="email" id="form2Example17" class="form-control form-control-lg"
+                  value={email}
+                                                  onChange={(e) => {
+                                                      setEmail(e.target.value);
+                                                  }}
+                                                  placeholder="Your Email" />
+                  {/* <label class="form-label" for="form2Example17">Email address</label> */}
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="text" id="form2Example17" class="form-control form-control-lg"
+             
+                                                  name="phone"
+                                                
+                                                  value={phone}
+                                                  onChange={(e) => {
+                                                      setPhone(e.target.value);
+                                                  }}
+                                                  placeholder="Your Dial number"/>
+                  {/* <label class="form-label" for="form2Example17">Email address</label> */}
+                </div>
+
+                <div class="form-outline mb-4">
+                  <input type="password" id="form2Example27" class="form-control form-control-lg"
+                
+                                                   name="password"
+                                                  
+                                                   value={password}
+                                                   onChange={(e) => {
+                                                       setPassword(e.target.value);
+                                                   }}
+                                                   placeholder="Enter your Password"/>
+                  {/* <label class="form-label" for="form2Example27">Password</label> */}
+                </div>
+{/* 
+                {ErrMsg.length > 0 && (
+                                  <div>
+                                      <p style={{ color: "red" }}>{ErrMsg}</p>
+                                  </div>
+                              )} */}
+
+                <div class="pt-1 mb-4">
+                  <button className="btn text-white me-4" type="submit" style={{backgroundColor:'#F77D0A'}}>
+                      Register
+                  </button>
+                </div>
+
+                {/* <a class="small text-muted" href="#">Forgot password?</a> */}
+                <p class="mb-5 pb-lg-2" style={{color: '#393f81'}}>Already a Member ? <a 
+                    style={{color: '#393f81'}} onClick={() => {navigate("/owner/login")}}>Login here</a></p>
+                <a  class="small text-muted">Terms of use.</a>
+                <a  class="small text-muted">Privacy policy</a>
+              </form>
+
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
     );
 }
 

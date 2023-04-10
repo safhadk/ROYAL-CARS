@@ -25,7 +25,37 @@ const ownerSchema = new mongoose.Schema(
             required: true,
             minlength: [6],
         },
-        isBanned: { type: Boolean, default: false },
+        place:{
+            type: String,
+        },
+        pincode:{
+            type: String,
+        },
+        city:{
+            type: String,
+        },
+        district:{
+            type: String,
+        },
+        state:{
+            type: String,
+        },
+        country:{
+            type: String,
+        },
+        aadhar:{
+            type: String,
+        },
+        images: {
+            type: Array,
+        },
+        isBanned: { 
+            type: Boolean,
+             default: false 
+        },
+        verified:{
+            type:Boolean,
+        }
     },
     {
         timestamps: true,

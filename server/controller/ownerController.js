@@ -79,9 +79,13 @@ export const LoginPost = async (req, res, next) => {
 export const Cars = async (req, res, next) => {
         try {
             const cars = await car.find({owner:req.user._id})
+            const owner = await ownerModel.findOne({_id:req.user._id})
+            const verification=owner.verified
+
             console.log(cars)
             res.json({
-                data:cars
+                data:cars,
+                verification:verification
             });
         } catch (error) {
             res.json({ status: "failed", message: error.message });
@@ -124,3 +128,52 @@ export const addCar = async (req, res, next) => {
         console.log(error.message)
     }
 };
+
+export const Profile=async(req,res)=>{
+    console.log("reached profile")
+    try {
+        const owner = await ownerModel.findOne({_id:req.user._id})
+        console.log(owner,"owner details")
+    
+        res.status(200).json({
+            owner:owner,
+
+        });
+    } catch (error) {
+        console.log(error.message)
+    }
+
+}
+
+export const UpdateProfile = async(req,res)=>{
+    try {
+        const image = req.files.map((val) => val.filename)
+        console.log(req.files);
+        const { place, pincode, city, district, state, country,aadhar} = req.body
+        console.log(req.body)
+        console.log(req.body.place ,"place here")
+
+        ownerModel.updateOne({_id:req.user._id},{$set:{
+            place:place,
+            pincode:pincode,
+            city:city,
+            district:district,
+            state:state,
+            country:country,
+            aadhar:aadhar,
+            verified:false,
+            images: image
+        }})
+            .then((data) => {
+                console.log(data);
+                res.status(200).json({ status: "success" });
+            })
+            .catch((error) => {
+                console.log(error);
+                res.json({ status: "failed", message: error.message });
+            });
+  
+    } catch (error) {
+        console.log(error.message)
+    }
+}

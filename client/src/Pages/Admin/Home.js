@@ -2,9 +2,10 @@ import React from "react";
 import Navbar from "../../Components/admin/Navbar/Navbar";
 import Dashboard from "../../Components/admin/Dashboard/Dashboard";
 
+
 function AdminHome() {
     return (
-        <div className="container w-100">
+        <div className="">
             <Navbar />
             <Dashboard />
         </div>
