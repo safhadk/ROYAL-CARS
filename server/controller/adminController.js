@@ -1,5 +1,8 @@
 import adminModel from "../models/adminSchema.js";
+import owner from "../models/ownerSchema.js";
+import user from "../models/userSchema.js";
 import { adminToken,} from "../middleware/auth.js";
+import locations from "../models/location.js";
 
 //admin login submit
 
@@ -30,3 +33,100 @@ export const adminLogin = async (req, res, next) => {
         console.log(error.message);
     }
 };
+
+export const users=async(req,res)=>{
+    try {
+    const users=await user.find({})
+    res.status(200).json(users)
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+export const owners=async(req,res)=>{
+    try {
+    const owners=await owner.find({})
+    res.status(200).json(owners)
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+export const block=async(req,res)=>{
+    try {
+        const {id}=req.body
+        const userBlock=await user.updateOne({_id:id},{$set:{block:true}})
+        res.status(200).json(true)
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+export const unblock=async(req,res)=>{
+    try {
+        console.log("user unblock here")
+        const {id}=req.body
+        const userunBlock=await user.updateOne({_id:id},{$set:{block:false}})
+        res.status(200).json(false)
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+
+export const ownerBlock=async(req,res)=>{
+    try {
+        const {id}=req.body
+        const ownerBlock=await owner.updateOne({_id:id},{$set:{block:true}})
+        res.status(200).json(true)
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+export const ownerUnblock=async(req,res)=>{
+    try {
+        const {id}=req.body
+        const ownerUnblock=await owner.updateOne({_id:id},{$set:{block:false}})
+        res.status(200).json(false)
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+export const addLocation = async (req, res, next) => {
+    try {
+        console.log(req.files,"files");
+        console.log(req.body,"body");
+        const image = req.files.map((val) => val.filename)
+        console.log(req.files);
+        const { location } = req.body
+
+        await locations.create({
+            location: location,
+            images: image
+        })
+            .then((data) => {
+                console.log(data);
+                res.json({ status: "success" });
+            })
+            .catch((error) => {
+                console.log(error);
+                res.json({ status: "failed", message: error.message });
+            });
+  
+    } catch (error) {
+        console.log(error.message)
+    }
+};
+
+export const location = async(req,res)=>{
+    try {
+        console.log("entered in location  controller")
+        const location= await locations.find({})
+        console.log(location,"location")
+        res.status(200).json(location)
+        } catch (err) {
+            console.log(err.message);
+        }
+}

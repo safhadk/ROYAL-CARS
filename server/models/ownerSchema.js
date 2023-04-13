@@ -55,6 +55,10 @@ const ownerSchema = new mongoose.Schema(
         },
         verified:{
             type:Boolean,
+        },
+        block:{
+            type:Boolean,
+            default:false
         }
     },
     {

@@ -1,10 +1,11 @@
 import React from "react";
 import Navbar from "../../Components/admin/Navbar/Navbar";
-import Dashboard from "../../Components/admin/Dashboard/Dashboard";
 import Sidebar from "../../Components/admin/Sidebar/Sidebar";
 
+import AddLocation from "../../Components/admin/AddLocation/AddLocation";
 
-function AdminHome() {
+
+function AddLocations() {
     return (
       
 <div className="main__layout">
@@ -12,11 +13,11 @@ function AdminHome() {
       <Sidebar />
       <div className="layout">
         <Navbar />
-        <div className="content">
-          <Dashboard />
+        <div className="content" style={{marginTop:'100px',marginLeft:'270px',marginRight:'15px'}}>
+          <AddLocation />
         </div>
       </div>
     </div>
     );
 }
-export default AdminHome;
+export default AddLocations;

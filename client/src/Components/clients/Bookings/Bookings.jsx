@@ -2,11 +2,20 @@ import React from 'react'
 import { useEffect,useState } from 'react';
 import Axios from "../../../Axios/userAxios.js";
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function Bookings() {
+  const navigate=useNavigate();
 
   let token = useSelector((state) => state.Client.Token);
   const [bookings,setBookings]=useState({})
+
+  
+ 
+  if (!token) {
+    console.log("no token")
+    navigate("/");
+  }
 
   useEffect( () => {
     Axios.get('/bookings',
@@ -97,12 +106,12 @@ function Bookings() {
                   <td>{booking.pickup}</td>
                   <td>{booking.drop}</td>
                   <td>
-  <button type="button" class="btn btn-sm rounded-pill text-black" style={{backgroundColor:'yellow'}}>{booking.status}</button>
+  <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>{booking.status}</button>
   
 </td>
 
                   <td>
-                    <button class="btn text-white me-4" type="submit" style={{backgroundColor:'#F77D0A'}}>
+                    <button class="btn text-white me-4" type="button" style={{backgroundColor:'#F77D0A'}} onClick={() => navigate('/bookingDetail', { state: { id: booking._id } })}>
                       View
                     </button>
                   </td>

@@ -8,6 +8,7 @@ import Cars from "../Pages/Clients/Cars";
 import Payment from '../Pages/Clients/Payment'
 import Bookings from "../Pages/Clients/Bookings";
 import BookingSuccess from "../Pages/Clients/BookingSuccess";
+import BookingDetail from "../Pages/Clients/BookingDetail";
 
 function UserRoute() {
     const IsAuth = useSelector((state) => state.Client.Token);
@@ -21,6 +22,8 @@ function UserRoute() {
                 <Route path="/payment" element= {<Payment />}/>
                 <Route path="/bookings" element= {IsAuth ?<Bookings />:  <Navigate to='/login'/>}/>  
                 <Route path="/success" element= {IsAuth ? <BookingSuccess /> : <Navigate to='/login'/>}/>  
+                <Route path="/bookingDetail" element= {IsAuth ? <BookingDetail /> : <Navigate to='/login'/>}/>  
+
             </Routes>
         </div>
     );

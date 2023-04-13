@@ -225,13 +225,28 @@ export const Bookings=async(req,res)=>{
     try {
         const booking=await bookings.find({user:req.user._id}).populate('car')
         
-        
-       
         res.status(200).json(booking)
-        console.log(booking)
-        console.log(booking.length)
+        // console.log(booking)
+        // console.log(booking.length)
 }
   catch (error) {
         console.log(error.messsage)
     }
+}
+
+export const bookingDetails=async(req,res)=>{
+try {
+    console.log("booking deatils hereee")
+    const {id}=req.query
+    console.log(id,"id")
+    console.log(req.query)
+    console.log(2)
+    console.log(req.user._id,"user id")
+    const booking =await bookings.findOne({_id:id,user:req.user._id}).populate('car')
+    console.log(booking,"booking")
+    res.status(200).json(booking)
+   
+} catch (error) {
+    console.log(error.messsage,"error")
+}
 }
