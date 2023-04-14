@@ -7,6 +7,7 @@ import Home from "../Pages/Owner/Home";
 import Cars from "../Pages/Owner/Cars";
 import AddCar from "../Pages/Owner/AddCar";
 import Profile from "../Pages/Owner/Profile";
+import Booking from "../Pages/Owner/Bookings";
 
 function OwnerRoute() {
     const IsAuth = useSelector((state) => state.Owner.Token);
@@ -18,7 +19,9 @@ function OwnerRoute() {
                 <Route path="/login" element={IsAuth ? <Home /> : <Login />} />
                 <Route path='/cars' element={IsAuth ? <Cars/>:<Navigate to='/owner/login'/>}/>
                 <Route path='/add-car' element={IsAuth ? <AddCar/>:<Navigate to='/owner/login'/>}/>    
-                <Route path='/profile' element={IsAuth ? <Profile/>:<Navigate to='/owner/login'/>}/>    
+                <Route path='/profile' element={IsAuth ? <Profile/>:<Navigate to='/owner/login'/>}/>   
+                <Route path='/bookings' element={IsAuth ? <Booking/>:<Navigate to='/owner/login'/>}/> 
+
             </Routes>
         </div>
     );

@@ -1,24 +1,24 @@
 import React, { useState,useEffect } from 'react'
-import Axios from '../../../Axios/ownerAxios'
+import Axios from '../../../Axios/userAxios.js';
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import { Toast } from '../../../Helper/Toast.js';
 
 function Profile() {
   const navigate=useNavigate();
-  let token = useSelector((state) => state.Owner.Token);
-  const [owner,setOwner] =useState({})
+  let token = useSelector((state) => state.Client.Token);
+  const [user,setUser] =useState({})
   const [place,setPlace]=useState("")
   const [pincode,setPincode]=useState("")
   const [city,setCity]=useState("")
   const [district,setDistrict]=useState("")
   const [state,setState]=useState("")
   const [country,setCountry]=useState("")
-  const [aadhar,setAadhar]=useState("")
+  const [licence,setLicence]=useState("")
 
 
   if (!token) {
-    navigate("/owner");
+    navigate("/");
 }
   useEffect(() => {
       Axios.get('/profile',
@@ -29,8 +29,8 @@ function Profile() {
       .then((res) => {
       console.log(res.data,"data")
 
-        setOwner(res.data.owner)
-        console.log(res.data.owner,"owner in response")
+      setUser(res.data.user)
+        console.log(res.data.user,"owner in response")
     })
     .catch((error) => {
         console.log(error.message);
@@ -56,7 +56,7 @@ function Profile() {
     formData.append('district', String(district));
     formData.append('state', String(state));
     formData.append('country', String(country));
-    formData.append('aadhar', String(aadhar));
+    formData.append('licence', String(licence));
 
 
     const updateProfile = await Axios.post("/profile", formData, {
@@ -71,14 +71,14 @@ function Profile() {
             icon: "success",
             title: "Profile updated ",
           }).then(() => {
-            navigate("/owner");
+            navigate("/profile");
           });
         } else {
           Toast.fire({
             icon: "error",
             title: "Somthing went wrong",
           }).then(() => {
-            navigate("/owner");
+            navigate("/");
           });
         }
       });
@@ -107,9 +107,9 @@ function Profile() {
               <img src="/safad/team-4.jpg" alt="avatar"
                 class="rounded-circle " style={{width: '100px',height:'100px'}}/>
               
-              <h5 class="my-4">{owner.name}</h5>
-              <p class="text-muted mb-2">City : {owner.city}</p>
-              <p class="text-muted mb-2">Place : {owner.place}</p>
+              <h5 class="my-4">{user.name}</h5>
+              <p class="text-muted mb-2">City : {user.city}</p>
+              <p class="text-muted mb-2">Place : {user.place}</p>
               <div class="d-flex mb-3">
                 <h6 class="mr-2">Rating:</h6>
                 <div class="d-flex align-items-center justify-content-center mb-1">
@@ -127,7 +127,7 @@ function Profile() {
                        Verification Pending
                   </button>}
                  */}
-                  { owner.verified===true ?  <button className="btn  text-white me-4" type="button" style={{backgroundColor:'green'}} >
+                  { user.verified===true ?  <button className="btn  text-white me-4" type="button" style={{backgroundColor:'green'}} >
                        Verified
                   </button> :<button className="btn  text-white me-4" type="button" style={{backgroundColor:'#F77D0A'}} >
                        Verification Pending
@@ -144,32 +144,32 @@ function Profile() {
 
           <div class="col-md-5 border-right mt-5">
             
-            { owner.verified===true ||owner.verified ===false  ? <div class="">
+            { user.verified===true ||user.verified ===false  ? <div class="">
           
                 <div class="row mt-2">
-                    <div class="col-md-6"><input type="text" class="form-control" placeholder=" name"  value={owner.name} readOnly/></div>
-                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="email" value={owner.email} readOnly/></div>
+                    <div class="col-md-6"><input type="text" class="form-control" placeholder=" name"  value={user.name} readOnly/></div>
+                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="email" value={user.email} readOnly/></div>
                 </div>
 
                 <div class="row mt-2">
-                    <div class="col-md-6"><input type="text" class="form-control" placeholder="phone" value={owner.phone}  readOnly/></div>
-                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="Place" value={owner.place} readOnly  /></div>
+                    <div class="col-md-6"><input type="text" class="form-control" placeholder="phone" value={user.phone}  readOnly/></div>
+                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="Place" value={user.place} readOnly  /></div>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><input type="text" class="form-control" placeholder="pincode" value={owner.pincode} readOnly /></div>
-                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="city" value={owner.city} readOnly/></div>
+                    <div class="col-md-6"><input type="text" class="form-control" placeholder="pincode" value={user.pincode} readOnly /></div>
+                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="city" value={user.city} readOnly/></div>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><input type="text" class="form-control" placeholder="district" value={owner.district} readOnly  /></div>
-                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="State" value={owner.state} readOnly/></div>
+                    <div class="col-md-6"><input type="text" class="form-control" placeholder="district" value={user.district} readOnly  /></div>
+                    <div class="col-md-6 mt-2"><input type="text" class="form-control"  placeholder="State" value={user.state} readOnly/></div>
                 </div>
                 <div class="row mt-2">
-                <div class="col-md-6"><input type="text" class="form-control"  placeholder="Country" value={owner.country} readOnly/></div>
-                    <div class="col-md-6 mt-2"><input type="text" id="s" name="s" class="form-control" placeholder="Aadhar Number"value={owner.aadhar} readOnly/></div>   
+                <div class="col-md-6"><input type="text" class="form-control"  placeholder="Country" value={user.country} readOnly/></div>
+                    <div class="col-md-6 mt-2"><input type="text" id="s" name="s" class="form-control" placeholder="licence Number"value={user.licence} readOnly/></div>   
                 </div>
 
                 <div class="row mt-2">
-                { owner.verified===true ?  <button className="btn  text-white me-4" type="button" style={{backgroundColor:'green'}} >
+                { user.verified===true ?  <button className="btn  text-white me-4" type="button" style={{backgroundColor:'green'}} >
                        Verified
                   </button> :<button className="btn  text-white me-4" type="button" style={{backgroundColor:'#F77D0A'}} >
                        Verification Pending
@@ -178,7 +178,7 @@ function Profile() {
              
                
                 {/* <div class="row mt-2">
-                <div class="col-md-12 text-danger"><h1>Upload Front And Back Image of Aadhar Card</h1></div>
+                <div class="col-md-12 text-danger"><h1>Upload Front And Back Image of licence Card</h1></div>
                 </div> */}
 
                 {/* <div class="row mt-2">
@@ -202,12 +202,12 @@ function Profile() {
               <form method="post" onSubmit={handleSubmit}>
           
           <div class="row mt-2">
-                    <div class="col-md-6"><input type="text" id="name" name="name" class="form-control" placeholder=" name"  value={owner.name} readOnly/></div>
-                    <div class="col-md-6 mt-2"><input type="text" id="email" name="email" class="form-control"  placeholder="email" value={owner.email} readOnly/></div>
+                    <div class="col-md-6"><input type="text" id="name" name="name" class="form-control" placeholder=" name"  value={user.name} readOnly/></div>
+                    <div class="col-md-6 mt-2"><input type="text" id="email" name="email" class="form-control"  placeholder="email" value={user.email} readOnly/></div>
                 </div>
 
                 <div class="row mt-2">
-                    <div class="col-md-6"><input type="text" id="phone" name="phone" class="form-control" placeholder="phone" value={owner.phone}  readOnly/></div>
+                    <div class="col-md-6"><input type="text" id="phone" name="phone" class="form-control" placeholder="phone" value={user.phone}  readOnly/></div>
                     <div class="col-md-6 mt-2"><input type="text" id="place" name="place" class="form-control"  placeholder="place" value={place} onChange={(e) => {
                       setPlace(e.target.value);
                     }}  /></div>
@@ -232,13 +232,13 @@ function Profile() {
                 <div class="col-md-6"><input type="text" class="form-control" id="country" name="country"  placeholder="Country" value={country} onChange={(e) => {
                       setCountry(e.target.value);
                     }}/></div>
-                    <div class="col-md-6 mt-2"><input type="text" id="aadhar" name="aadhar" class="form-control" placeholder="Aadhar Number" value={aadhar} onChange={(e) => {
-                      setAadhar(e.target.value);
+                    <div class="col-md-6 mt-2"><input type="text" id="licence" name="licence" class="form-control" placeholder="licence Number" value={licence} onChange={(e) => {
+                      setLicence(e.target.value);
                     }} /></div>   
                 </div>
                
                 <div class="row mt-2">
-                <div class="col-md-12 text-danger"><h1>Upload Front And Back Image of Aadhar Card</h1></div>
+                <div class="col-md-12 text-danger"><h1>Upload Front And Back Image of Driving Licence</h1></div>
                 </div>
 
                 <div class="row mt-2">

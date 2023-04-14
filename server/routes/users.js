@@ -1,5 +1,6 @@
 import express from "express";
-import {LoginPost, Register,Cars,Search,CreateOrder,VerifyPayment,Bookings,bookingDetails} from "../controller/usersController.js";
+import upload from "../config/multer.js";
+import {LoginPost, Register,Cars,Search,CreateOrder,VerifyPayment,Bookings,bookingDetails,Profile,UpdateProfile,checkverify} from "../controller/usersController.js";
 import { verifyToken } from "../middleware/auth.js";
 const router = express.Router();
 
@@ -11,5 +12,7 @@ router.post('/createOrder',verifyToken,CreateOrder)
 router.post('/verifyPayment',verifyToken,VerifyPayment)
 router.get('/bookings',verifyToken,Bookings)
 router.get('/bookingDetails',verifyToken,bookingDetails)
-
+router.get('/profile',verifyToken,Profile)
+router.post('/profile',verifyToken,upload.array('image', 2),UpdateProfile)
+router.get('/checkverify',verifyToken,checkverify)
 export default router;

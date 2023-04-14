@@ -3,8 +3,10 @@ import ownerAxios from "../../../Axios/ownerAxios.js";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
+import { useEffect } from 'react';
 
 function AddCars() {
+  const[locations,setLocations]=useState({})
 
   const [images, setImages] = useState([]);
 
@@ -30,6 +32,22 @@ function AddCars() {
     console.log("no token")
     navigate("/owner");
   }
+
+  useEffect(() => {
+    ownerAxios.get("/locations", {
+              headers: {
+              Authorization: `Bearer ${token}`,
+              },
+          })
+          .then((res) => {
+            console.log(res.data)
+              setLocations(res.data)
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+  }, []);
+
 
   const Toast = Swal.mixin({
     toast: true,
@@ -104,19 +122,18 @@ function AddCars() {
                 </div>
                 <div className="form-group row">
                   <div className="col-sm-12">
+                 
                     <select className="form-control" id="location" name="location" placeholder='Location:' onChange={(e) => {
                       setLocation(e.target.value);
                     }}>
-                      <option value="">City</option>
-                      <option value="Kochi">Kochi</option>
-                      <option value="Kozhikode">Kozhikode</option>
-                      <option value="Trivandrum">Trivandrum</option>
-                      <option value="Chennai">Chennai</option>
-                      <option value="Hyderabad">Hyderabad</option>
-                      <option value="Bengaluru">Bengaluru</option>
+                      <option value="">Select City</option>
+                      {locations.length>0 && locations.map((location,index)=>(
+                       <option key={index} value={location}>{location}</option>
+                      ))}
                     </select>
                   </div>
                 </div>
+                
 
                 <div className="form-group row">
                   <div className="col-sm-12">
@@ -195,6 +212,7 @@ function AddCars() {
 
                 <div className="form-group row">
                   <div className="col-sm-8">
+                  <p class="text-black ">Main Car Image</p>
                     <input
                       type="file"
                       className="form-control"
@@ -208,6 +226,7 @@ function AddCars() {
 
                 <div className="form-group row">
                   <div className="col-sm-8">
+                  <p class="text-black ">Car Image</p>
                     <input
                       type="file"
                       className="form-control"
@@ -221,6 +240,7 @@ function AddCars() {
 
                 <div className="form-group row">
                   <div className="col-sm-8">
+                  <p class="text-black ">Car Image</p>
                     <input
                       type="file"
                       className="form-control"
@@ -234,6 +254,7 @@ function AddCars() {
 
                 <div className="form-group row">
                   <div className="col-sm-8">
+                  <p class="text-black ">Car Image</p>
                     <input
                       type="file"
                       className="form-control"

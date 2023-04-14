@@ -133,7 +133,9 @@ function Owner() {
                       {/* <td>$2563</td> */}
                       <td>{owner.createdAt}</td>
                       <td>
-                      <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>Approved</button>
+                      {owner.verified===true && <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>Approved</button>}
+                     {owner.verified===false && <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>Requested</button>}
+                     {owner.verified !==false && owner.verified !==true   && <button type="button" class="btn btn-sm  text-black" style={{backgroundColor:'orange',width:'85px'}}>pending</button>}
                                 </td>
                       <td>
                       
@@ -145,11 +147,15 @@ function Owner() {
                                         <i class="far fa-trash-alt text-danger"></i>
                                     </a> */}
 
-{owner.block===true ?<button className="btn text-white bg-danger me-4" type="submit" style={{borderRadius:'100px'}} onClick={()=>ownerUnblock(owner._id)}>
+{owner.block===true ?<button className="btn btn-sm text-white bg-danger me-4" type="submit" style={{borderRadius:'100px'}} onClick={()=>ownerUnblock(owner._id)}>
                         UnBlock
-                    </button>: <button className="btn text-white bg-success me-4" style={{width:'85px',borderRadius:'100px'}} type="submit" onClick={()=>ownerBlock(owner._id)} >
+                    </button>: <button className="btn btn-sm text-white bg-success me-4" style={{width:'70px',borderRadius:'100px'}} type="submit" onClick={()=>ownerBlock(owner._id)} >
                         Block
                     </button>}
+
+                    <button className="btn btn-sm text-white bg-dark me-4" style={{width:'85px',borderRadius:'100px'}} type="submit" onClick={()=>navigate('/admin/owner-details', { state: { id: owner._id } })} >
+                        View
+                    </button>
                                 </td>
                                 
                             </tr>

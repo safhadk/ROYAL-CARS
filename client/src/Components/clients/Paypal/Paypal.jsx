@@ -19,6 +19,8 @@ function Paypal(props) {
     
     const createOrder = async (data) => {
       try {
+         
+        
         if (advance===0){
             advance=1
       }
@@ -28,7 +30,8 @@ function Paypal(props) {
               "Content-Type": "application/json",
                Authorization: `Bearer ${token}`,
             },
-          });
+          })
+         
 
         return (response.data.id);
       } catch (e) {

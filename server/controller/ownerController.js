@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import { generateAuthTokenOwner} from "../middleware/auth.js";
 import ownerModel from "../models/ownerSchema.js";
 import car from "../models/car.js";
+import location from "../models/location.js";
+import bookings from "../models/bookings.js";
 
 //owner registration
 
@@ -175,5 +177,49 @@ export const UpdateProfile = async(req,res)=>{
   
     } catch (error) {
         console.log(error.message)
+    }
+}
+
+export const Locations =async(req,res)=>{
+    try {
+        const allLocations=await location.find({})
+        const locations = [];
+        allLocations.forEach(location => {
+            locations.push(location.location);
+        });
+        console.log(locations,"locations array")
+        res.status(200).json(locations)
+    } catch (error) {
+        console.log(error.message);
+    }
+    
+}
+
+
+export const Booking=async(req,res)=>{
+    try {
+        console.log(req.user._id)
+        const booking = await bookings.find({ 
+          }).populate("car");
+
+        console.log(booking,"bookings")
+        console.log(booking.length,"booking length")
+        res.status(200).json(booking)
+}
+  catch (error) {
+        console.log(error,"error")
+    }
+}
+
+export const changeStatus=async(req,res)=>{
+    try {
+        console.log("entered to verification")
+    
+        const {id,status}=req.body
+        console.log(status)
+        const bookingStatus=await bookings.updateOne({_id:id},{$set:{status:status}})
+        res.status(200).json(true)
+    } catch (error) {
+        console.log(error.message);
     }
 }

@@ -44,12 +44,13 @@ function BookingDetail() {
             <div class="card-header p-4">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <p class="text-muted mb-2"> Order ID : <span class="fw-bold text-body">#{booking?.bookingId}</span></p>
+                  <p class="text-muted mb-2"> Booking ID : <span class="fw-bold text-body">#{booking?.bookingId}</span></p>
                   <p class="text-muted mb-0"> Place On : <span class="fw-bold text-body"> 
                     <Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking?.createdAt}</Moment></span> </p>
+                    <p class="text-muted mb-2"> Rent : <span class="fw-bold text-body">₹{booking?.TotalAmount}</span></p>
                 </div>
                 <div>
-                  <h6 class="mb-0"> <a href="#">View Details</a> </h6>
+                  {/* <h6 class="mb-0"> <a href="#">View Details</a> </h6> */}
                 </div>
               </div>
             </div>
@@ -57,10 +58,19 @@ function BookingDetail() {
             <div class="card-body p-4">
               <div class="d-flex flex-row mb-4 pb-2">
                 <div class="flex-fill">
-                  <h5 class="bold">{booking.car?.carModel}</h5>
-                  <p class="text-muted"> Location:{booking.car?.location}</p>
-                  <h4 class="mb-3"> $ 299 <span class="small text-muted"> via (COD) </span></h4>
-                  <p class="text-muted">Tracking Status on: <span class="text-body"> <Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking?.updatedAt}</Moment></span></p>
+                  <h3 class="bold mb-1">{booking.car?.carModel}</h3>
+                  <p class="text-muted mb-1"> Location: {booking.car?.place} , {booking.car?.location}</p>
+                  <h5 class="bold mb-1"> Registration : {booking.car?.registrationNumber}</h5>
+                  <h5 class="bold mb-1"> Seater : {booking.car?.seater}</h5>
+                  <h5 class="bold mb-1"> Transmission : {booking.car?. transmission}</h5>
+                  <h5 class="bold mb-3"> Fuel : {booking.car?.fuel}</h5>
+                  <h5 class="bold mb-1"> Advance Paid: ₹{booking?.Advance}</h5>
+                  <h4 class="mb-1"> Balance Amount : ₹{booking?.ownerAmount} <span class="small text-muted"> pay to owner (COD/Online) </span></h4>
+                  <h5 class="bold mb-3"> Total Rent : ₹{booking?.TotalAmount}</h5>
+                  <h5 class="bold mb-1"> Pickup Date and Time : <Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking?.pickup}</Moment></h5>
+                  <h5 class="bold mb-1"> Drop Date and Time : <Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking?.drop}</Moment></h5>
+                 
+                  <p class="text-muted mt-5">Tracking Status on: <span class="text-body"> <Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking?.updatedAt}</Moment></span></p>
                 </div>
                 <div>
                   <img class="align-self-center img-fluid" alt="....image"
@@ -80,14 +90,21 @@ function BookingDetail() {
                 </div>
               </div>
               <ul id="progressbar-1" class="mx-0 mt-0 mb-5 px-0 pt-0 pb-4">
-                <li class="step0 active" id="step1"><span
-                    style={{marginLeft: '22px', marginTop: '12px'}}>PLACED</span></li>
-                <li class="step0 active text-center" id="step2"><span>SHIPPED</span></li>
-                <li class="step0 text-muted text-end" id="step3"><span
-                    style={{marginRight: '22px'}}>DELIVERED</span></li>
+               {booking?.status==='pickup pending' ? <li  class="step0 active" id="step1"><span  style={{marginLeft: '15px', marginTop: '12px'}}>Booked</span></li> :  <li  class="step0 " id="step1"><span  style={{marginLeft: '22px', marginTop: '12px'}}>Booked</span></li> }
+               {booking?.status==='pickup pending' ? <li  class="step0 active text-center"  id="step2"><span  >Pickup pending</span></li> :  <li  class="step0 " id="step2"><span  >Pickup pending</span></li> }   
+                {/* <li class="step0 active   text-center" id="step2"><span>Pickup pending</span></li> */}
+                <li class="step0   text-muted text-end" id="step3"><span
+                    style={{marginRight: '16px'}}>Picked</span></li>
+                    <li class="step0  text-muted text-end" id="step4"><span
+                    style={{marginRight: '-12px'}}>Drop Pending</span></li>
+                     <li class="step0  text-muted text-end" id="step5"><span
+                    style={{marginRight: '7px'}}>Dropped </span></li>
+                    <li class="step0  text-muted text-end" id="step6"><span
+                    style={{marginRight: '12px'}}>Amount </span></li>
+                    
               </ul>
             </div>
-            <div class="card-footer p-4">
+            {/* <div class="card-footer p-4">
               <div class="d-flex justify-content-between">
                 <h5 class="fw-normal mb-0"><a href="#!">Track</a></h5>
                 <div class="border-start h-100"></div>
@@ -98,7 +115,7 @@ function BookingDetail() {
                 <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
                 </h5>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

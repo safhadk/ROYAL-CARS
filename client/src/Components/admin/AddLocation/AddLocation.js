@@ -3,7 +3,10 @@ import axios from '../../../Axios/adminAxios.js';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from '../../../Helper/Toast.js';
-
+// import { Country, State, City }  from 'country-state-city';
+// let cities=City.getCitiesOfCountry('IN');
+// let citiesinkerala=City.getCitiesOfState('IN', 'KL')
+// console.log(citiesinkerala)
 
 
 

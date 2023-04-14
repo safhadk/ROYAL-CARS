@@ -7,6 +7,9 @@ import Users from "../Pages/Admin/Users";
 import Owners from "../Pages/Admin/Owners";
 import Locations from "../Pages/Admin/Locations";
 import AddLocation from "../Pages/Admin/AddLocation";
+import OwnerDetails from "../Pages/Admin/OwnerDetails";
+import UserDetail from "../Pages/Admin/UserDetail";
+
 
 function AdminRoute() {
     const IsAdminAuth = useSelector((state) => state.Admin.Token);
@@ -19,6 +22,9 @@ function AdminRoute() {
                 <Route path="/owners" element={IsAdminAuth ? <Owners/> : <Login />} />
                 <Route path="/locations" element={IsAdminAuth ? <Locations/> : <Login />} />
                 <Route path="/add-location" element={IsAdminAuth ? <AddLocation/> : <Login />} />
+                <Route path="/owner-details" element={IsAdminAuth ? <OwnerDetails/> : <Login />} />
+                <Route path="/user-details" element={IsAdminAuth ? <UserDetail/> : <Login />} />
+
            
                 
             </Routes>

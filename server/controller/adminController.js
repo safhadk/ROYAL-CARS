@@ -3,6 +3,7 @@ import owner from "../models/ownerSchema.js";
 import user from "../models/userSchema.js";
 import { adminToken,} from "../middleware/auth.js";
 import locations from "../models/location.js";
+import userModel from "../models/userSchema.js";
 
 //admin login submit
 
@@ -130,3 +131,50 @@ export const location = async(req,res)=>{
             console.log(err.message);
         }
 }
+
+export const ownerDetails =async(req,res)=>{
+try {
+    const {id}=req.query
+    const owners=await owner.find({_id:id})
+    console.log(owners,"owner")
+    res.status(200).json(owners)
+ 
+} catch (err) {
+    console.log(err.message)
+}
+}
+
+export const ownerVerify=async(req,res)=>{
+    try {
+        console.log("entered to verification")
+        const {id}=req.body
+        const ownerverify=await owner.updateOne({_id:id},{$set:{verified:true}})
+        res.status(200).json(true)
+    } catch (error) {
+        console.log(error.message);
+    }
+   
+}
+
+export const userDetails =async(req,res)=>{
+    try {
+        const {id}=req.query
+        const users=await userModel.find({_id:id})
+        console.log(users,"users")
+        res.status(200).json(users)
+     
+    } catch (err) {
+        console.log(err.message)
+    }
+    }
+
+    export const userVerify=async(req,res)=>{
+        try {
+            console.log("entered to verification")
+            const {id}=req.body
+            const userverify=await userModel.updateOne({_id:id},{$set:{verified:true}})
+            res.status(200).json(true)
+        } catch (error) {
+            console.log(error.message);
+        }
+    }

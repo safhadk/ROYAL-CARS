@@ -82,6 +82,7 @@ export const LoginPost = async (req, res, next) => {
 export const Cars = async (req, res, next) => {
     try {
         let cars;
+
         if (req.query.id) {
             cars = await car.find({ _id: req.query.id })
 
@@ -185,8 +186,11 @@ export const Search = async (req, res) => {
 
 export const CreateOrder = async (req, res) => {
     try {
-        const order = await paypal.createOrder(req.body);
-        res.json(order);
+       
+            const order = await paypal.createOrder(req.body);
+            res.json(order);
+        
+        
     } catch (err) {
         console.log(err.message, "error occured in create order")
         res.status(500).send(err.message);
@@ -248,5 +252,70 @@ try {
    
 } catch (error) {
     console.log(error.messsage,"error")
+}
+}
+
+
+export const Profile=async(req,res)=>{
+    console.log("reached profile")
+    try {
+        const user = await userModel.findOne({_id:req.user._id})
+        console.log(user,"user details")
+    
+        res.status(200).json({
+            user:user,
+        });
+    } catch (error) {
+        console.log(error.message)
+    }
+
+}
+
+
+export const UpdateProfile = async(req,res)=>{
+    try {
+        console.log("update profile hree")
+        const image = req.files.map((val) => val.filename)
+        console.log(req.files);
+        const { place, pincode, city, district, state, country,licence} = req.body
+        console.log(req.body)
+        console.log(req.body.place ,"place here")
+
+        userModel.updateOne({_id:req.user._id},{$set:{
+            place:place,
+            pincode:pincode,
+            city:city,
+            district:district,
+            state:state,
+            country:country,
+            licence:licence,
+            verified:false,
+            images: image
+        }})
+            .then((data) => {
+                console.log(data);
+                res.status(200).json({ status: "success" });
+            })
+            .catch((error) => {
+                console.log(error);
+                res.json({ status: "failed", message: error.message });
+            });
+  
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const checkverify=async(req,res)=>{
+try {
+    console.log("entered to chec verify")
+    console.log(req.user._id,"id hereee")
+    const verification=await userModel.findOne({_id:req.user._id})
+    if (verification.verified!==true){
+        console.log("success")
+        res.json(false)
+    }
+} catch (error) {
+    
 }
 }

@@ -133,7 +133,10 @@ function User() {
                       {/* <td>$2563</td> */}
                       <td>{user.createdAt}</td>
                       <td>
-                      <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>Approved</button>
+                     {user.verified===true && <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>Approved</button>}
+                     {user.verified===false && <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>Requested</button>}
+                     {user.verified !==false && user.verified !==true   && <button type="button" class="btn btn-sm  text-black" style={{backgroundColor:'orange',width:'85px'}}>pending</button>}
+                     
                                 </td>
                       <td>
                       
@@ -145,11 +148,15 @@ function User() {
                                         <i class="far fa-trash-alt text-danger"></i>
                                     </a> */}
 
-{user.block===true ?<button className="btn text-white bg-danger me-4" type="submit" style={{borderRadius:'100px'}} onClick={()=>userUnblock(user._id)} >
+{user.block===true ?<button className="btn btn-sm text-white bg-danger me-4" type="submit" style={{borderRadius:'100px'}} onClick={()=>userUnblock(user._id)} >
                         UnBlock
-                    </button>: <button className="btn text-white bg-success me-4" style={{width:'85px',borderRadius:'100px'}} type="button" onClick={()=>userBlock(user._id)} >
+                    </button>: <button className="btn btn-sm text-white bg-success me-4" style={{width:'70px',borderRadius:'100px'}} type="button" onClick={()=>userBlock(user._id)} >
                         Block
                     </button>}
+
+                    <button className="btn btn-sm text-white bg-dark me-4" style={{width:'85px',borderRadius:'100px'}} type="submit" onClick={()=>navigate('/admin/user-details', { state: { id: user._id } })} >
+                        View
+                    </button>
                                 </td>
                                 
                             </tr>

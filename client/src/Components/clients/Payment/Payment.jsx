@@ -3,11 +3,18 @@ import { useLocation } from 'react-router-dom'
 import userAxios from "../../../Axios/userAxios.js";
 import Paypal from '../Paypal/Paypal.jsx';
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { Toast } from '../../../Helper/Toast.js';
 
 function Payment() {
+  const token = useSelector((state) => state.Client.Token);
+const navigate=useNavigate()
   const [carData, setCarData] = useState([]);
   const [rent, setRent] = useState(null);
   const [advance, setAdvance] = useState(0);
+  const[payments,setPayments]=useState(false);
+
   let location = useLocation();
   let car = location.state.bookingCarData;
   const carId = location.state.id;
@@ -36,6 +43,40 @@ function Payment() {
       });
 
   }, []);
+
+  const Login=()=>{
+    setPayments(true)
+    console.log("method clicked")
+  if (!token) {
+    console.log("no token")
+    navigate("/login");
+    Toast.fire({
+      icon: "error",
+      title: "Please Login Before Payment",
+    });
+  }else{
+    userAxios.get('/checkverify',
+    {
+      headers: {
+      Authorization: `Bearer ${token}`,
+      },
+  })
+    .then((res)=>{
+      console.log(res,"res in method click")
+      console.log(res.data,"data in verify")
+      if(res.data===false){
+        navigate('/profile');
+        Toast.fire({
+          icon: "error",
+          title: "Please complete verification",
+        });
+      }
+      
+    })
+  }
+  }
+
+ 
 
   return (
 
@@ -146,10 +187,10 @@ function Payment() {
 
 
               <div class="form-group">
-                <select class="custom-select px-4" style={{ height: '50px' }}>
+                <select class="custom-select px-4" style={{ height: '50px' }} onChange={Login} >
                   <option value="">-Select Payment Method-</option>
                   <option value="Paypal">Paypal</option>
-                  <option value="Cash">Cash</option>
+                  {/* <option value="Cash">Cash</option>
                   <option value="Cheque">Cheque</option>
                   <option value="DD">DD</option>
                   <option value="NEFT">NEFT</option>
@@ -161,7 +202,7 @@ function Payment() {
                   <option value="Credit Card">Credit Card</option>
                   <option value="PhonePe">PhonePe</option>
                   <option value="GooglePay">GooglePay</option>
-                  <option value="Paytm">Paytm</option>
+                  <option value="Paytm">Paytm</option> */}
                 </select>
               </div>
 
@@ -171,7 +212,7 @@ function Payment() {
                 <PayPalButtons style={{ layout: "horizontal" }} />
                </PayPalScriptProvider> */}
                 {
-                  advance !== 0 && (
+                  advance !== 0 && payments===true &&  (
                     <PayPalScriptProvider options={{ "client-id": process.env.REACT_APP_ClientId }}>
                       <Paypal advance={advance} bookingData={bookingData} />
                     </PayPalScriptProvider>

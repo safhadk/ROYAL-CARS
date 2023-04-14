@@ -62,7 +62,7 @@ function Header() {
                             <a
                                 class="nav-link"
                                 onClick={() => {
-                                    navigate("/owner/cars");
+                                    navigate("/owner/bookings");
                                 }}
                             >
                                 <b>Bookings</b>
@@ -72,7 +72,7 @@ function Header() {
                             <a
                                 class="nav-link"
                                 onClick={() => {
-                                    navigate("/owner/bookings");
+                                    navigate("/owner/profile");
                                 }}
                             >
                                 <b>Profile</b>

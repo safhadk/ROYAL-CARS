@@ -16,13 +16,14 @@ color: #455A64;
 #progressbar-1 li {
 list-style-type: none;
 font-size: 13px;
-width: 33.33%;
+/* width: 33.33%; */
+width:16%;
 float: left;
 position: relative;
 }
 
 #progressbar-1 #step1:before {
-content: "1";
+content: "✓";
 color: #fff;
 width: 29px;
 margin-left: 22px;
@@ -30,18 +31,45 @@ padding-left: 11px;
 }
 
 #progressbar-1 #step2:before {
-content: "2";
+content: "✓";
 color: #fff;
 width: 29px;
 }
 
 #progressbar-1 #step3:before {
-content: "3";
+content: "✓";
 color: #fff;
 width: 29px;
 margin-right: 22px;
 text-align: center;
 }
+
+#progressbar-1 #step4:before {
+    content: "✓";
+    color: #fff;
+    width: 29px;
+    margin-right: 22px;
+    text-align: center;
+    }
+
+    #progressbar-1 #step5:before {
+        content: "✓";
+        color: #fff;
+        width: 29px;
+        margin-right: 22px;
+        text-align: center;
+        }
+
+        #progressbar-1 #step6:before {
+            content: "✓";
+            color: #fff;
+            width: 29px;
+            margin-right: 22px;
+            text-align: center;
+            }
+    
+
+
 
 #progressbar-1 li:before {
 line-height: 29px;
