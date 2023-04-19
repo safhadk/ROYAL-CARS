@@ -1,22 +1,22 @@
 import express from "express";
 const router = express.Router();
-import { verifyToken } from "../middleware/auth.js";
+import { verifyTokenAdmin } from "../middleware/auth.js";
 import upload from "../config/multer.js";
 import { adminLogin,users,owners,block,unblock,ownerBlock,ownerUnblock,addLocation,location,ownerDetails,ownerVerify,userDetails,userVerify} from "../controller/adminController.js";
 
 router.post("/adminLogin", adminLogin);
-router.get('/users',verifyToken,users);
-router.get('/owners',verifyToken,owners)
-router.patch('/block',verifyToken,block)
-router.patch('/unblock',verifyToken,unblock)
-router.patch('/ownerBlock',verifyToken,ownerBlock)
-router.patch('/ownerunblock',verifyToken,ownerUnblock)
-router.post('/location',verifyToken,upload.array('image', 1),addLocation)
-router.get('/locations',verifyToken,location)
-router.get('/ownerDetails',verifyToken,ownerDetails)
-router.patch('/verify',verifyToken,ownerVerify)
-router.get('/userDetails',verifyToken,userDetails)
-router.patch('/userverify',verifyToken,userVerify)
+router.get('/users',verifyTokenAdmin,users);
+router.get('/owners',verifyTokenAdmin,owners)
+router.patch('/block',verifyTokenAdmin,block)
+router.patch('/unblock',verifyTokenAdmin,unblock)
+router.patch('/ownerBlock',verifyTokenAdmin,ownerBlock)
+router.patch('/ownerunblock',verifyTokenAdmin,ownerUnblock)
+router.post('/location',verifyTokenAdmin,upload.array('image', 1),addLocation)
+router.get('/locations',verifyTokenAdmin,location)
+router.get('/ownerDetails',verifyTokenAdmin,ownerDetails)
+router.patch('/verify',verifyTokenAdmin,ownerVerify)
+router.get('/userDetails',verifyTokenAdmin,userDetails)
+router.patch('/userverify',verifyTokenAdmin,userVerify)
 
 
 

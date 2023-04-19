@@ -106,7 +106,8 @@ function Bookings() {
                   <td>{booking.pickup}</td>
                   <td>{booking.drop}</td>
                   <td>
-  <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>{booking.status}</button>
+                    {booking.status==="Completed" ?<button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>{booking.status}</button>: <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>{booking.status}</button>}
+  
   
 </td>
 

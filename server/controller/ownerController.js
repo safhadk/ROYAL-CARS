@@ -4,6 +4,7 @@ import ownerModel from "../models/ownerSchema.js";
 import car from "../models/car.js";
 import location from "../models/location.js";
 import bookings from "../models/bookings.js";
+import messages from "../models/message.js";
 
 //owner registration
 
@@ -132,8 +133,10 @@ export const addCar = async (req, res, next) => {
 };
 
 export const Profile=async(req,res)=>{
+   
     console.log("reached profile")
     try {
+        console.log(req.user.role," : owner role")
         const owner = await ownerModel.findOne({_id:req.user._id})
         console.log(owner,"owner details")
     
@@ -200,7 +203,7 @@ export const Booking=async(req,res)=>{
     try {
         console.log(req.user._id)
         const booking = await bookings.find({ 
-          }).populate("car");
+          }).populate("car").sort({createdAt:-1})
 
         console.log(booking,"bookings")
         console.log(booking.length,"booking length")
@@ -223,3 +226,69 @@ export const changeStatus=async(req,res)=>{
         console.log(error.message);
     }
 }
+
+
+export const message=async(req,res)=>{
+    console.log(req.body,"body here")
+    typeof(req.body.userId,"boolena")
+    try {
+        let exist = await messages.findOne({
+            user: req.body.userId,
+            owner: req.user._id, 
+          });
+
+          console.log(exist,"exist")
+          if (exist) {
+            exist.messages.push({
+              message: req.body.message,
+              recipient: req.body.userId,
+              sender: req.user._id, 
+              author:req.body.author,
+              time:req.body.time,
+              date:req.body.date
+            });
+            await exist.save();
+            res.status(200).json(exist)
+          }else{
+            const newMessage = await messages.create({
+                user: req.body.userId, 
+                owner: req.user._id, 
+                  messages: [{
+                  message: req.body.message,
+                  recipient: req.body.userId,
+                  sender: req.user._id, 
+                  author:req.body.author,
+                  time:req.body.time,
+                  date:req.body.date
+                }]
+              });
+              res.status(200).json(newMessage)
+          }
+
+       
+    } catch (error) {
+        console.log(error.message,"in message")
+    }
+    }
+
+    export const getmessage=async(req,res)=>{
+        console.log("entered to get message")
+        try {
+            console.log(req.query,"owner id in get message")
+            if(req.query.ownerId){
+                const message=await messages.findOne({
+                    owner: req.user._id,
+                    user: req.query.ownerId})
+                    res.status(200).json(message)
+            }
+            
+            else  {
+                const message=await messages.find({ owner: req.user._id }).populate('user')
+                console.log(message);
+                    res.status(200).json(message);
+            }
+            
+        } catch (error) {
+            console.log(error.message,"error in get mesage")
+        }
+        }

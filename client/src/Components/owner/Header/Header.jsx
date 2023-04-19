@@ -11,7 +11,7 @@ function Header() {
     const name = useSelector((state) => state.Owner.name);
     const logout = () => {
         dispatch(OwnerLogout());
-        navigate("/owner");
+        navigate("/owner/login");
     };
 
     return (
@@ -76,6 +76,19 @@ function Header() {
                                 }}
                             >
                                 <b>Profile</b>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a
+                                class="nav-link active"
+                                
+                                onClick={() => {
+                                    navigate("/owner/chat");
+                                }}
+                                aria-current="page"
+                            >
+                                <b>Chats</b>
                             </a>
                         </li>
                         

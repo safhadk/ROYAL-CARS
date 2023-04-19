@@ -37,6 +37,7 @@ export const adminLogin = async (req, res, next) => {
 
 export const users=async(req,res)=>{
     try {
+        console.log(req.user.role," : admin role")
     const users=await user.find({})
     res.status(200).json(users)
     } catch (err) {

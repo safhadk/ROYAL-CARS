@@ -85,7 +85,10 @@ const navigate=useNavigate()
         <div class="row">
           <div class="col-lg-8 mb-5">
             <h1 class="display-4 text-uppercase mb-5">{carData[0]?.carModel}</h1>
-
+            <div class="col-md-3 col-6 mb-2" onClick={()=>navigate('/chat',{state:{ownerId:carData[0]?.owner}})}>
+                <i class="	fas fa-comment text-primary mr-2"></i>
+                <span style={{marginLeft:'3px'}}  >Chat</span>
+              </div>
             <div class="col-lg-6 mb-4">
               <h1 class="">Amount : ₹ {rent} </h1>
               <div class="d-flex mb-3">
@@ -119,51 +122,51 @@ const navigate=useNavigate()
             <div class="row pt-2">
               <div class="col-md-3 col-6 mb-2">
                 <i class="fas fa-gas-pump text-primary mr-2"></i>
-                <span>Fuel : {carData[0]?.fuel} </span>
+                <span style={{marginLeft:'3px'}}>Fuel : {carData[0]?.fuel} </span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="fa fa-cogs text-primary mr-2"></i>
-                <span>Transmission : {carData[0]?.transmission}</span>
+                <span style={{marginLeft:'3px'}}>Transmission : {carData[0]?.transmission}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="fa fa-map-marker text-primary mr-2"></i>
-                <span>Location : {carData[0]?.place}</span>
+                <span style={{marginLeft:'3px'}}>Location : {carData[0]?.place}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="fas fa-city text-primary mr-2"></i>
-                <span>City : {carData[0]?.location}</span>
+                <span style={{marginLeft:'3px'}}>City : {carData[0]?.location}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
-                <i class="fa fa-car text-primary mr-2"></i>
-                <span>Seater : {carData[0]?.seater}</span>
+                <i class="fa fa-car text-primary mr-3"></i>
+                <span style={{marginLeft:'3px'}}>Seater : {carData[0]?.seater}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="	fa fa-address-card text-primary mr-2"></i>
-                <span>Registration : {carData[0]?.registrationNumber} </span>
+                <span style={{marginLeft:'3px'}}>Registration : {carData[0]?.registrationNumber} </span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="	fas fa-money-check text-primary mr-2"></i>
-                <span>Per Hour Charge : ₹ {carData[0]?.perHourCharge}</span>
+                <span style={{marginLeft:'3px'}}>Per Hour Charge : ₹ {carData[0]?.perHourCharge}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="	fas fa-money-check-alt text-primary mr-2"></i>
-                <span>Per Day Charge : ₹ {carData[0]?.perDayCharge}</span>
+                <span style={{marginLeft:'3px'}}>Per Day Charge : ₹ {carData[0]?.perDayCharge}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="far fa-credit-card text-primary mr-2"></i>
-                <span>Per Month Charge : ₹ {carData[0]?.perMonthCharge}</span>
+                <span style={{marginLeft:'3px'}}>Per Month Charge : ₹ {carData[0]?.perMonthCharge}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="fas fa-map-marker-alt text-primary mr-2"></i>
-                <span>Pickup : {car.pickup}</span>
+                <span style={{marginLeft:'3px'}}>Pickup : {car.pickup}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="fas fa-map-marker text-primary mr-2"></i>
-                <span>Drop : {car.drop}</span>
+                <span style={{marginLeft:'3px'}}>Drop : {car.drop}</span>
               </div>
               <div class="col-md-3 col-6 mb-2">
                 <i class="fa fa-road text-primary mr-2"></i>
-                <span>Mileage : 20km </span>
+                <span style={{marginLeft:'3px'}}>Mileage : 20km </span>
               </div>
             </div>
           </div>

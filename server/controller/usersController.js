@@ -5,6 +5,7 @@ import car from "../models/car.js";
 import * as paypal from "../middleware/paypal-api.js";
 import bookings from "../models/bookings.js";
 import { Id } from '../helper/bookingId-Generator.js'
+import messages from "../models/message.js";
 
 //user Registration
 
@@ -227,8 +228,7 @@ export const VerifyPayment = async (req, res) => {
 
 export const Bookings=async(req,res)=>{
     try {
-        const booking=await bookings.find({user:req.user._id}).populate('car')
-        
+        const booking=await bookings.find({user:req.user._id}).populate('car').sort({createdAt:-1}) 
         res.status(200).json(booking)
         // console.log(booking)
         // console.log(booking.length)
@@ -257,6 +257,7 @@ try {
 
 
 export const Profile=async(req,res)=>{
+    console.log(req.user.role," : user role")
     console.log("reached profile")
     try {
         const user = await userModel.findOne({_id:req.user._id})
@@ -319,3 +320,67 @@ try {
     
 }
 }
+
+export const message=async(req,res)=>{
+    console.log(req.body,"body here")
+    try {
+
+        let exist = await messages.findOne({
+            user: req.user._id,
+            owner: req.body.ownerId, 
+          });
+
+          console.log(exist,"exist")
+          if (exist) {
+            exist.messages.push({
+              message: req.body.message,
+              sender: req.user._id,
+              recipient: req.body.ownerId, 
+              author:req.body.author,
+              time:req.body.time,
+              date:req.body.date
+            });
+            await exist.save();
+            res.status(200).json(exist)
+          }else{
+            const newMessage = await messages.create({
+                user: req.user._id, 
+                owner: req.body.ownerId, 
+                  messages: [{
+                  message: req.body.message,
+                  sender: req.user._id,
+                  recipient: req.body.ownerId, 
+                  author:req.body.author,
+                  time:req.body.time,
+                  date:req.body.date
+                }]
+              });
+              res.status(200).json(newMessage)
+          }
+
+       
+    } catch (error) {
+        console.log(error.message,"in message")
+    }
+    }
+
+    export const getmessage=async(req,res)=>{
+        console.log("entered to get message")
+        try {
+            if (req.query.ownerId){
+                console.log(req.query,"owner id in get message")
+                const message=await messages.findOne({
+                    user: req.user._id,
+                    owner: req.query.ownerId, })
+                    res.status(200).json(message)
+            }else{
+                console.log("user role")
+                const message=await messages.find({ user: req.user._id }).populate('owner')
+                console.log(message);
+                    res.status(200).json(message);
+            }
+                
+        } catch (error) {
+            console.log(error.message,"error in get mesage")
+        }
+        }

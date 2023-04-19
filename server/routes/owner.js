@@ -1,17 +1,19 @@
 import upload from "../config/multer.js";
 import express from "express";
-import {  LoginPost, Register,Cars,addCar,Profile,UpdateProfile,Locations,Booking,changeStatus} from "../controller/ownerController.js";
-import { verifyToken } from "../middleware/auth.js";
+import {  LoginPost, Register,Cars,addCar,Profile,UpdateProfile,Locations,Booking,changeStatus,message,getmessage} from "../controller/ownerController.js";
+import { verifyTokenOwner } from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/register", Register);
 router.post("/login", LoginPost);
-router.get("/cars",verifyToken, Cars);
-router.post('/addCar',verifyToken,upload.array('image', 4),addCar)
-router.get('/profile',verifyToken,Profile)
-router.post('/profile',verifyToken,upload.array('image', 2),UpdateProfile)
-router.get('/locations',verifyToken,Locations)
-router.get('/bookings',verifyToken,Booking)
-router.patch('/changestatus',verifyToken,changeStatus)
+router.get("/cars",verifyTokenOwner, Cars);
+router.post('/addCar',verifyTokenOwner,upload.array('image', 4),addCar)
+router.get('/profile',verifyTokenOwner,Profile)
+router.post('/profile',verifyTokenOwner,upload.array('image', 2),UpdateProfile)
+router.get('/locations',verifyTokenOwner,Locations)
+router.get('/bookings',verifyTokenOwner,Booking)
+router.patch('/changestatus',verifyTokenOwner,changeStatus)
+router.post('/message',verifyTokenOwner,message)
+router.get('/message',verifyTokenOwner,getmessage)
 
 export default router;

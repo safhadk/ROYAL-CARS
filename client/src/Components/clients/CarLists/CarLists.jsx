@@ -21,12 +21,9 @@ function CarLists() {
     }, []);
 
     const handleSearch = async () => {
-        await userAxios.post("/search", { city, pickup, drop }).then((res) => {
-            setCarData(res.data.data);
-            setbookingCarData(res.data.bookingCarData)
-        }).catch((e) => {
-            console.log(e.message);
-        });
+       const {data}= await userAxios.post("/search", { city, pickup, drop })
+        setCarData(data.data);
+        setbookingCarData(data.bookingCarData)
     }
 
     return (

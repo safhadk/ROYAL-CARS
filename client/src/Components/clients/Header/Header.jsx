@@ -69,6 +69,16 @@ function Header() {
                                 <b>Profile</b>
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link"
+                                onClick={() => {
+                                navigate("/chat");
+                                }}
+                            >
+                                <b>Chats</b>
+                            </a>
+                        </li>
                         
                     </ul>
                    
