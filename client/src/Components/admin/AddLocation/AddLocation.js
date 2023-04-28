@@ -3,16 +3,8 @@ import axios from '../../../Axios/adminAxios.js';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Toast } from '../../../Helper/Toast.js';
-// import { Country, State, City }  from 'country-state-city';
-// let cities=City.getCitiesOfCountry('IN');
-// let citiesinkerala=City.getCitiesOfState('IN', 'KL')
-// console.log(citiesinkerala)
-
-
 
 function AddLocation() {
-
-
 
   const [images, setImages] = useState([]);
 
@@ -31,13 +23,9 @@ function AddLocation() {
   }
 
   useEffect(() => {
- console.log("work")
-  
-    
+ console.log("work") 
   }, [])
   
-
-
   const handleAddLocation = async (e) => {
     
     e.preventDefault();
@@ -47,7 +35,6 @@ function AddLocation() {
     });
    
     formData.append('location', String(location));
-
 
     console.log(formData,"dataaa")
 try {
@@ -80,8 +67,6 @@ try {
   console.log(error,"error in add location")
 }
    
-
-
   };
 
   return (
@@ -101,8 +86,6 @@ try {
             
               <form onSubmit={handleAddLocation}>
                 
-               
-
                 <div className="form-group row">
                   <div className="col-sm-12">
                     <input type="text" className="form-control" id="location" name="location" placeholder='Enter City Name:' onChange={(e) => {
@@ -110,8 +93,6 @@ try {
                     }} />
                   </div>
                 </div>
-
-               
 
                 <div className="form-group row">
                   <div className="col-sm-8">

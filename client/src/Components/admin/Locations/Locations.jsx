@@ -51,16 +51,11 @@ function Locations() {
   <img class="card-img-top " src={`/safad/${location.images[0]}`} alt="Card image cap" style={{height:'200px'}} />
   <div class="card-body">
     <h5 class="card-title">{location.location}</h5>
-    {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-    {/* <a href="#" class="btn btn-warning mt-1" style={{width:'75px'}}>Edit</a> <a href="#" class="btn btn-danger mt-1">Delete</a> */}
   </div>
 </div>
 ))}
 
 {location.length === 0 && <h1 className='text-danger'>No locations found Add New Locations </h1>}
-
-
-
 
     </div>
 </div>

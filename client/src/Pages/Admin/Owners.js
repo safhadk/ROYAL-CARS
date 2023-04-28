@@ -3,10 +3,8 @@ import Navbar from "../../Components/admin/Navbar/Navbar";
 import Sidebar from "../../Components/admin/Sidebar/Sidebar";
 import Owner from "../../Components/admin/Owner/Owner";
 
-
 function Owners() {
-    return (
-      
+    return (   
 <div className="main__layout">
    
       <Sidebar />

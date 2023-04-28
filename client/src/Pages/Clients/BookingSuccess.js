@@ -7,8 +7,7 @@ function bookingSuccess() {
     <div>
         <Header/>
         <BookingSuccess/>
-    </div>
-    
+    </div>  
   )
 }
 

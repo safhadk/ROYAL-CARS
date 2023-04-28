@@ -4,8 +4,6 @@ import AdminRoute from "./Routes/admin";
 import UserRoute from "./Routes/user";
 import OwnerRoute from "./Routes/owner";
 import './App.css'
-// import io from 'socket.io-client'
-// const socket = io.connect("http://localhost:5000")
 
 function App() { 
     return (
