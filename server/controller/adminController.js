@@ -4,6 +4,7 @@ import user from "../models/userSchema.js";
 import { adminToken,} from "../middleware/auth.js";
 import locations from "../models/location.js";
 import userModel from "../models/userSchema.js";
+import bookings from "../models/bookings.js";
 
 //admin login submit
 
@@ -177,5 +178,16 @@ export const userDetails =async(req,res)=>{
             res.status(200).json(true)
         } catch (error) {
             console.log(error.message);
+        }
+    }
+
+    export const Booking = async (req, res) => {
+        try {
+            const booking = await bookings.find({
+            }).populate("car").sort({ createdAt: -1 })
+            res.status(200).json(booking)
+        }
+        catch (error) {
+            console.log(error, "error")
         }
     }

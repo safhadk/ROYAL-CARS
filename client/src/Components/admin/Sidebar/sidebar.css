@@ -9,6 +9,7 @@
     padding: 0px 30px;
     color:white;
   }
+
   
   .sidebar__top {
     width: 100%;
@@ -82,8 +83,8 @@
   }
   
   .nav__active {
-    color: white;
-    background: #b7ffe913;
+    color: rgb(0, 0, 0);
+    background: #ffffff;
     padding: 6px;
     border-radius: 5px;
   }

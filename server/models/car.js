@@ -5,7 +5,7 @@ const carSchema = new Schema({
   
     owner:{
         type: Schema.Types.ObjectId,
-        ref: 'ownerSchema',
+        ref: 'owners',
     },
     carModel: {
         type: String,
@@ -51,5 +51,5 @@ const carSchema = new Schema({
 
 });
 
-const car = mongoose.model("car", carSchema);
+export const car = mongoose.model("car", carSchema);
 export default car;

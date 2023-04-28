@@ -1,6 +1,6 @@
 import express from "express";
 import upload from "../config/multer.js";
-import {LoginPost, Register,Cars,Search,CreateOrder,VerifyPayment,Bookings,bookingDetails,Profile,UpdateProfile,checkverify,message,getmessage} from "../controller/usersController.js";
+import {LoginPost, Register,Cars,Search,CreateOrder,VerifyPayment,Bookings,bookingDetails,Profile,UpdateProfile,checkverify,message,getmessage,OTP} from "../controller/usersController.js";
 import { verifyToken } from "../middleware/auth.js";
 const router = express.Router();
 
@@ -17,4 +17,5 @@ router.post('/profile',verifyToken,upload.array('image', 2),UpdateProfile)
 router.get('/checkverify',verifyToken,checkverify)
 router.post('/message',verifyToken,message)
 router.get('/message',verifyToken,getmessage)
+router.post('/otp',OTP)
 export default router;

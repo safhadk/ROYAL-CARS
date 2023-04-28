@@ -11,12 +11,15 @@ import BookingSuccess from "../Pages/Clients/BookingSuccess";
 import BookingDetail from "../Pages/Clients/BookingDetail";
 import Profile from "../Pages/Clients/Profile";
 import Chat from "../Pages/Clients/Chat";
+import E404 from "../Components/Common/E404/E404";
+import OTP from "../Pages/Clients/OTP";
 function UserRoute() {
     const IsAuth = useSelector((state) => state.Client.Token);
     return (
         <div>
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/otp" element= {<OTP />}/>
                 <Route path="/register" element={IsAuth ?<Home />:<Register />} />
                 <Route path="/login" element={IsAuth? <Home /> : <UserLogin />} />
                 <Route path="/cars" element= {<Cars />}/>
@@ -26,8 +29,7 @@ function UserRoute() {
                 <Route path="/bookingDetail" element= {IsAuth ? <BookingDetail /> : <Navigate to='/login'/>}/>  
                 <Route path="/profile" element= {IsAuth ? <Profile /> : <Navigate to='/login'/>}/>
                 <Route path="/chat" element= {IsAuth ? <Chat /> : <Navigate to='/login'/>}/>
-                  
-
+                <Route path='*' element={<E404 link={'/'}/>}/>
             </Routes>
         </div>
     );

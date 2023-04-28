@@ -4,6 +4,9 @@
 
 /********** Template CSS **********/
 
+body{
+    overflow-y:scroll;
+}
 :root {
     --primary: #F77D0A;
     --secondary: #2B2E4A;

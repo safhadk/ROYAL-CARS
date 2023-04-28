@@ -16,7 +16,7 @@ function UserRegister() {
 
        await userAxios.post("/register", { name, email, phone, password }).then((res) => {
             if (res.data.status) {
-                navigate("/login");
+                navigate("/otp",{state:{name:res.data.name,email:res.data.email,phone:res.data.phone,password:res.data.password}});
             } else {
                 setErrMsg("Something went wrong");
             }

@@ -45,7 +45,7 @@ function Header() {
                                 }}
                                 aria-current="page"
                             >
-                                <b>Home</b>
+                                <b>Dashboard</b>
                             </a>
                         </li>
                         <li class="nav-item">

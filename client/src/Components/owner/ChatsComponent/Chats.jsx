@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import  { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 import './ChatsComponent.css'
 import { useSelector } from "react-redux";
 import axios from "../../../Axios/ownerAxios";
 import Moment from "react-moment";
 import EmojiPicker from 'emoji-picker-react';
+
 
 
 function ChatsComponent({ socket, username, room }) {
@@ -110,7 +112,7 @@ function ChatsComponent({ socket, username, room }) {
     socket.on("receive_message", (data) => {
       setMessageList((list) => [...list, data]);
     });
-  }, [socket,currentMessage,messageList]);
+  }, [socket]);
 
   const popupStyle = {
     position: 'absolute',
@@ -273,7 +275,7 @@ function ChatsComponent({ socket, username, room }) {
 
                   </div>
 
-                  {messageList.length>0 &&
+                  {messageList.length>0 && user &&
                    <div class="col-md-6 col-lg-7 col-xl-8">
 
                     <ScrollToBottom className="message-container">

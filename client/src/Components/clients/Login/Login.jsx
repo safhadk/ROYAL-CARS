@@ -5,6 +5,14 @@ import userAxios from "../../../Axios/userAxios.js";
 import { ClientLogin } from "../../../Redux/ClientAuth";
 import "./assets/material-icon/css/material-design-iconic-font.min.css";
 import "./Login.css";
+import GoogleLogin from "../GoogleLogin/GoogleLogin.jsx";
+import GoogleLogout from "../GoogleLogout/GoogleLogout.jsx";
+import { useEffect } from "react";
+import {gapi} from 'gapi-script'
+const ClientId=process.env.REACT_APP_GoogleClientId
+
+
+
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -30,6 +38,18 @@ function Login() {
             }
         });
     };
+
+    useEffect(() => {
+     
+    function start(){
+      gapi.client.init({
+        clientId:ClientId,
+        scope:'https://www.googleapis.com/auth/youtube.force-ssl'
+      })
+    }
+      gapi.load('client:auth2',start)
+    }, [])
+    
     return (
 
         <section class="vh-100" style={{backgroundColor:' #2B2E4A'}}>
@@ -86,6 +106,10 @@ function Login() {
                               Login
                           </button>
                         </div>
+                        <GoogleLogin/>
+                        {/* <GoogleLogout/> */}
+
+                  
       
                         <a class="small text-muted" href="#">Forgot password?</a>
                         <p class="mb-5 pb-lg-2" style={{color: '#393f81'}}>Don't have an account? <a 

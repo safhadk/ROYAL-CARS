@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import { verifyTokenAdmin } from "../middleware/auth.js";
 import upload from "../config/multer.js";
-import { adminLogin,users,owners,block,unblock,ownerBlock,ownerUnblock,addLocation,location,ownerDetails,ownerVerify,userDetails,userVerify} from "../controller/adminController.js";
+import { adminLogin,users,owners,block,unblock,ownerBlock,ownerUnblock,addLocation,location,ownerDetails,ownerVerify,userDetails,userVerify,Booking} from "../controller/adminController.js";
 
 router.post("/adminLogin", adminLogin);
 router.get('/users',verifyTokenAdmin,users);
@@ -17,6 +17,7 @@ router.get('/ownerDetails',verifyTokenAdmin,ownerDetails)
 router.patch('/verify',verifyTokenAdmin,ownerVerify)
 router.get('/userDetails',verifyTokenAdmin,userDetails)
 router.patch('/userverify',verifyTokenAdmin,userVerify)
+router.get('/bookings',verifyTokenAdmin,Booking)
 
 
 

@@ -48,7 +48,7 @@ const Sidebar = () => {
 
               <li className="nav__item" >
                 <NavLink
-                  to='/dashboard'
+                  to='/admin/bookings'
                   className={(navClass) =>
                     navClass.isActive ? "nav__active nav__link" : "nav__link"
                   }

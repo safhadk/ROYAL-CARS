@@ -1,22 +1,20 @@
 import React from 'react'
 import { useEffect,useState } from 'react';
-import Axios from '../../../Axios/ownerAxios.js';
+import Axios from '../../../Axios/adminAxios.js';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Moment from 'react-moment'
 
 
-
 function Bookings() {
   const navigate=useNavigate();
 
-  let token = useSelector((state) => state.Owner.Token);
+  let token = useSelector((state) => state.Admin.Token);
   const [bookings,setBookings]=useState({})
-  const [verify,setVerify]=useState(false)
 
   if (!token) {
     console.log("no token")
-    navigate("/owner");
+    navigate("/admin");
   }
 
   useEffect( () => {
@@ -25,30 +23,11 @@ function Bookings() {
       Authorization: `Bearer ${token}`,
     }}).then((res) => {
       setBookings(res.data)
-      console.log(res.data,"response here")
- 
+         console.log(res.data,"response here")
    }).catch((error) => {
        console.log(error.message);
    });
-}, [verify]);
-
-const verification=async(id,status)=>{
-  console.log(id,"id")
-
-  await Axios.patch(`/changeStatus`,{id,status}, {
-    headers: {
-    Authorization: `Bearer ${token}`,
-    },
-})
-.then((res) => {
-  console.log(res.data,"response")
-  setVerify(!verify)
-})
-.catch((error) => {
-    console.log(error.messsage);
-});
-}
-
+}, []);
   return (
 
     <div id="main-wrapper">
@@ -58,7 +37,7 @@ const verification=async(id,status)=>{
                             <div class="card card-white">
                                 <div class="card-body row align-items-center">
                                     <div class="col-12 col-md-5 mb-4 mb-md-0">
-                                        <h4 class="mb-0">Bookings</h4>
+                                        <h4 class="mb-0">My Bookings</h4>
                                     </div>
 
                                     <div class="col-12 col-md-7">
@@ -97,12 +76,12 @@ const verification=async(id,status)=>{
                   <th scope="col">ID</th>
                   <th scope="col">Car</th>
                   <th scope="col">Order Date</th>
-                  <th scope="col">My Amount</th>
+                  <th scope="col">Advance</th>
                   <th scope="col">Total Amount</th>
                   <th scope="col">Pickup</th>
                   <th scope="col">Drop</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Change Status</th>
+                  {/* <th scope="col">Action</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -121,32 +100,21 @@ const verification=async(id,status)=>{
                     </div>
                   </td>
                   <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.orderDate}</Moment></td>
-                  <td>₹{booking.ownerAmount}</td>
+                  <td>₹{booking.Advance}</td>
                   <td>₹{booking.TotalAmount}</td>
-                  <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.pickup}</Moment></td>
+                  <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.orderDate}</Moment></td>
                   <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.drop}</Moment></td>
                   <td>
- {booking.status==="Completed" ? <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>{booking.status}</button>:<button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>{booking.status}</button>}
+                    {booking.status==="Completed" ?<button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>{booking.status}</button>: <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>{booking.status}</button>}
+  
   
 </td>
 
-                  <td>
-                   {booking.status==="pickup pending" && <button class="btn btn-sm text-white me-4" type="button" style={{backgroundColor:'#F77D0A'}} onClick={()=>verification(booking._id,"Drop Pending")}>
-                      Picked
-                    </button>}
-
-                    {booking.status==="Drop Pending" && <button class="btn btn-sm text-white me-4" type="button" style={{backgroundColor:'#F77D0A'}} onClick={()=>verification(booking._id,"Dropped")}>
-                      Dropped
-                    </button>}
-
-                    {booking.status==="Dropped" && <button class="btn btn-sm text-white me-4" type="button" style={{backgroundColor:'green'}} onClick={()=>verification(booking._id,"Completed")}>
-                      Paid
-                    </button>}
-
-                    {booking.status==="Completed" && <button class="btn btn-sm text-white me-4" type="button" style={{backgroundColor:'green'}} >
-                      Completed
-                    </button>}
-                  </td>
+                  {/* <td>
+                    <button class="btn text-white me-4" type="button" style={{backgroundColor:'#F77D0A'}} onClick={() => navigate('/bookingDetail', { state: { id: booking._id } })}>
+                      View
+                    </button>
+                  </td> */}
                 </tr>
                 ))}
               </tbody>

@@ -6,34 +6,27 @@ import * as paypal from "../middleware/paypal-api.js";
 import bookings from "../models/bookings.js";
 import { Id } from '../helper/bookingId-Generator.js'
 import messages from "../models/message.js";
+import twilio from'twilio'
+const client = new twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 //user Registration
 
 export const Register = async (req, res, next) => {
     try {
         let userDetails = req.body;
-        const user = await userModel.find({ email: userDetails.email });
-        if (user.length === 0) {
-            userDetails.password = await bcrypt.hash(userDetails.password, 10);
-            userModel
-                .create({
-                    name: userDetails.name,
-                    email: userDetails.email.toLowerCase(),
-                    phone: userDetails.phone,
-                    password: userDetails.password,
-                })
-                .then((data) => {
-                    console.log(data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            res.json({ status: true, result: userDetails });
-        } else {
-            return res.json({ error: true });
-        }
+        await client.verify.v2.services('VA1476f4aeb245a45a4be560a4eef6be8d')
+        .verifications
+        .create({ to: `+91${userDetails.phone}`, channel: 'sms' })
+        .then(verification => {
+            console.log('success')
+            res.json({ status: true,name:userDetails.name,email:userDetails.email,phone:userDetails.phone,password:userDetails.password})
+        })
+        .catch(error => {
+            console.error(error+error.message,"error in otp send")
+        })
+       
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        // res.status(500).json({ error: error.message });
         console.log(error.message)
     }
 };
@@ -42,36 +35,74 @@ export const Register = async (req, res, next) => {
 
 export const LoginPost = async (req, res, next) => {
     try {
-        let userSignUp = {
-            Status: false,
-            message: null,
-            token: null,
-            name: null,
-        };
-        const userDetails = req.body;
-        const findUser = await userModel.findOne({ email: userDetails.email });
-        if (findUser) {
-            const isMatch = await bcrypt.compare(userDetails.password, findUser.password);
-            if (isMatch === true) {
-                const token = generateAuthToken(findUser);
-                const name = findUser.name;
-                userSignUp.message = "You are logged";
-                userSignUp.Status = true;
-                userSignUp.token = token;
-                userSignUp.name = findUser.name;
+        console.log(req.body,"body")
+        const {email}=req.body
+        console.log(email,"email in backend")
+        console.log(req.body.login==="google")
+        if(req.body.login==="google"){
+          
+            let userSignUp = {
+                Status: false,
+                message: null,
+                token: null,
+                name: null,
+            }
+            const findUser = await userModel.findOne({ email:email });
+            console.log(findUser,"l")
 
-                res.status(200)
-                    .send({ userSignUp });
+            if (findUser) {
+               
+                    const token = generateAuthToken(findUser);
+                    const name = findUser.name;
+                    userSignUp.message = "You are logged";
+                    userSignUp.Status = true;
+                    userSignUp.token = token;
+                    userSignUp.name = findUser.name;
+    
+                    res.status(200)
+                        .send({ userSignUp });
+               
+                }else{
+                    userSignUp.message = "your Email wrong";
+                    userSignUp.Status = false;
+                    res.send({ userSignUp });
+                }
+            } 
+            
+
+        else{
+            let userSignUp = {
+                Status: false,
+                message: null,
+                token: null,
+                name: null,
+            };
+            const userDetails = req.body;
+            const findUser = await userModel.findOne({ email: userDetails.email });
+            if (findUser) {
+                const isMatch = await bcrypt.compare(userDetails.password,findUser.password);
+                if (isMatch === true) {
+                    const token = generateAuthToken(findUser);
+                    const name = findUser.name;
+                    userSignUp.message = "You are logged";
+                    userSignUp.Status = true;
+                    userSignUp.token = token;
+                    userSignUp.name = findUser.name;
+    
+                    res.status(200)
+                        .send({ userSignUp });
+                } else {
+                    userSignUp.message = " Password is wrong";
+                    userSignUp.Status = false;
+                    res.send({ userSignUp });
+                }
             } else {
-                userSignUp.message = " Password is wrong";
+                userSignUp.message = "your Email wrong";
                 userSignUp.Status = false;
                 res.send({ userSignUp });
             }
-        } else {
-            userSignUp.message = "your Email wrong";
-            userSignUp.Status = false;
-            res.send({ userSignUp });
         }
+       
     } catch (error) {
         res.json({ status: "failed", message: error.message });
         console.log(error.message)
@@ -228,7 +259,7 @@ export const VerifyPayment = async (req, res) => {
 
 export const Bookings=async(req,res)=>{
     try {
-        const booking=await bookings.find({user:req.user._id}).populate('car').sort({createdAt:-1}) 
+        const booking=await bookings.find({user:req.user._id}).populate('car').sort({pickup:-1}) 
         res.status(200).json(booking)
         // console.log(booking)
         // console.log(booking.length)
@@ -383,4 +414,51 @@ export const message=async(req,res)=>{
         } catch (error) {
             console.log(error.message,"error in get mesage")
         }
+        }
+
+        export const OTP = async (req, res) => {
+            try {
+                let { OTP,email,phone,password,name} = req.body
+                console.log(req.body,"in otp")
+                client.verify.v2.services('VA1476f4aeb245a45a4be560a4eef6be8d')
+                    .verificationChecks
+                    .create({ to: `+91${phone}`, code: OTP })
+                    .then (async verification_check  => {
+                        if (verification_check.status == "approved") {
+                            console.log("aprovede")
+                            const user = await userModel.find({ email: email });
+                            if (user.length === 0) {
+                                console.log(password,"before bcrypt")
+                                 password = await bcrypt.hash(password, 10);
+                                userModel
+                                    .create({
+                                        name: name,
+                                        email: email.toLowerCase(),
+                                        phone: phone,
+                                        password: password,
+                                    })
+                                    .then((data) => {
+                                        console.log('user created')
+                                        console.log(data);
+                                        res.json({status:true})
+                                    })
+                                    .catch((error) => {
+                                        console.log(error);
+                                    });
+                                // res.json({ status: true, result: userDetails });
+                            } else {
+                                return res.json({ error: true });
+                            }
+
+                        } else if (verification_check.status == "pending") {
+                            console.log('failed');
+                            res.json({status:false})
+                        } else {
+                            console.log("failed 2");
+                            res.json({status:false})
+                        }
+                    })
+            } catch (error) {
+                console.error(`Error in verifyotp: ${error.message}`)
+            }
         }

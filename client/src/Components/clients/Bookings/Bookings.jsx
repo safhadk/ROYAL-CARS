@@ -3,6 +3,8 @@ import { useEffect,useState } from 'react';
 import Axios from "../../../Axios/userAxios.js";
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Moment from 'react-moment'
+
 
 function Bookings() {
   const navigate=useNavigate();
@@ -100,13 +102,13 @@ function Bookings() {
                       </div>
                     </div>
                   </td>
-                  <td>{booking.orderDate}</td>
+                  <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.orderDate}</Moment></td>
                   <td>₹{booking.Advance}</td>
                   <td>₹{booking.TotalAmount}</td>
-                  <td>{booking.pickup}</td>
-                  <td>{booking.drop}</td>
+                  <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.pickup}</Moment></td>
+                  <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{booking.drop}</Moment></td>
                   <td>
-                    {booking.status==="Completed" ?<button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>{booking.status}</button>: <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>{booking.status}</button>}
+                    {booking.status==="Completed" ?<button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>{booking.status}</button>: <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>Upcoming</button>}
   
   
 </td>

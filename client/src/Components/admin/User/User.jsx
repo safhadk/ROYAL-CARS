@@ -2,6 +2,9 @@ import React ,{useEffect,useState }from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import axios from '../../../Axios/adminAxios';
+import Moment from 'react-moment'
+
+
 
 function User() {
     const navigate = useNavigate();
@@ -131,7 +134,7 @@ function User() {
                      {user.block===true ?  <td><span class="text-danger">Blocked</span></td> :<td><span class="text-success">Active</span></td>}
                     
                       {/* <td>$2563</td> */}
-                      <td>{user.createdAt}</td>
+                      <td><Moment format="dddd,DD-MM-YYYY hh:mm:a">{user.createdAt}</Moment></td>
                       <td>
                      {user.verified===true && <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'green'}}>Approved</button>}
                      {user.verified===false && <button type="button" class="btn btn-sm  text-white" style={{backgroundColor:'#2b2e4a'}}>Requested</button>}

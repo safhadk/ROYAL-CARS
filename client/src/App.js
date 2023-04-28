@@ -7,14 +7,14 @@ import './App.css'
 // import io from 'socket.io-client'
 // const socket = io.connect("http://localhost:5000")
 
-function App() {
+function App() { 
     return (
         <div className="App">
             <Router>
                 <Routes>
                     <Route path="/*" element={<UserRoute />} />
                     <Route path="/admin/*" element={<AdminRoute />} />
-                    <Route path="/owner/*" element={<OwnerRoute />} />
+                    <Route path="/owner/*" element={<OwnerRoute />} />   
                 </Routes>
             </Router>
         </div>
